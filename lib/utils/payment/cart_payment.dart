@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:ebook/screens/localbank_pay_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ebook/models/response/braintree_payment_responses.dart';
 import 'package:ebook/models/response/checksum_response.dart';
@@ -37,6 +39,45 @@ class CartPayment {
       "MOBILE_NO": '000000000',
     };
     return getChecksum(request);
+  }
+
+  static Future payWithLocalBank(context, total, orderDetail) async {
+    var result = await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (_) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: LocalBankPayScreen(
+          bankName: "ABA",
+          amount: total,
+        ),
+      ),
+    );
+    if (result != null && result is Map) {
+      var transactionDetail = <String, String>{
+        "BANKNAME": result["bankName"].toString(),
+        "ORDERID": result["txtID"].toString(),
+        "CHECKSUMHASH": "NA",
+        "TXNAMOUNT": result["amount"].toString(),
+        "TXNDATE":
+            DateFormat("yyyy-MM-dd HH:mm:ss.0", "en_US").format(DateTime.now()),
+        "MID": "NA",
+        "TXNID": result["txtID"].toString(),
+        "PAYMENTMODE": LOCALEBANK,
+        "CURRENCY": CURRENCY_CODE,
+        "BANKTXNID": "NA",
+        "GATEWAYNAME": "NA",
+        "RESPMSG": "RESPMSG",
+        "payment_type": "3",
+        "STATUS": "pending",
+      };
+
+      return saveTransaction(transactionDetail, orderDetail, LOCALEBANK, 1)
+          .then((value) => print("value $value"))
+          .catchError((error) {
+        throw error;
+      });
+    }
   }
 
   static Future paywithPayPal(context, token, total, orderDetail) async {

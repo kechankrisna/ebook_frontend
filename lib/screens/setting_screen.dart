@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:ebook/app_localizations.dart';
 import 'package:ebook/component/app_language_dialog.dart';
 import 'package:ebook/main.dart';
 import 'package:ebook/screens/choose_detail_page_variant_screen.dart';
-import 'package:ebook/utils/admob_utils.dart';
+// import 'package:ebook/utils/admob_utils.dart';
 import 'package:ebook/utils/constants.dart';
 import 'package:ebook/utils/resources/colors.dart';
 import 'package:ebook/utils/resources/images.dart';
@@ -24,13 +24,13 @@ class SettingScreen extends StatefulWidget {
 class SettingScreenState extends State<SettingScreen> {
   var selectedLanguage = 0;
   bool isSwitched = false;
-  BannerAd _bannerAd;
+  // BannerAd _bannerAd;
 
   @override
   void initState() {
     super.initState();
     init();
-    _bannerAd = createBannerAd()..load();
+    // _bannerAd = createBannerAd()..load();
   }
 
   init() async {
@@ -42,7 +42,7 @@ class SettingScreenState extends State<SettingScreen> {
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    // _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -161,13 +161,13 @@ class SettingScreenState extends State<SettingScreen> {
       body: Stack(
         children: [
           body,
-          if (_bannerAd != null)
-            Positioned(
-              bottom: 0,
-              child: AdWidget(ad: _bannerAd),
-              height: AdSize.banner.height.toDouble(),
-              width: context.width(),
-            ),
+          // if (_bannerAd != null)
+          //   Positioned(
+          //     bottom: 0,
+          //     child: AdWidget(ad: _bannerAd),
+          //     height: AdSize.banner.height.toDouble(),
+          //     width: context.width(),
+          //   ),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:ebook/utils/admob_utils.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:ebook/utils/admob_utils.dart';
 import 'package:ebook/utils/resources/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:package_info/package_info.dart';
@@ -14,27 +14,30 @@ class AboutApp extends StatefulWidget {
 }
 
 class _AboutAppState extends State<AboutApp> {
-  BannerAd _bannerAd;
+  // BannerAd _bannerAd;
 
   @override
   void initState() {
     super.initState();
-    _bannerAd = createBannerAd()..load();
+    // _bannerAd = createBannerAd()..load();
   }
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    // _bannerAd?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget("About Us",
-          elevation: 0,
-          color: context.scaffoldBackgroundColor,
-          textColor: context.theme.textTheme.headline6.color),
+      appBar: appBarWidget(
+        "About Us",
+        elevation: 0,
+        color: context.scaffoldBackgroundColor,
+        textColor: context.theme.textTheme.headline6.color,
+        center: true,
+      ),
       body: Stack(
         children: <Widget>[
           Container(
@@ -88,28 +91,27 @@ class _AboutAppState extends State<AboutApp> {
                 ),
                 32.height,
                 AppButton(
-                  text: 'Buy Now',
+                  text: 'learn more',
                   textStyle: primaryTextStyle(color: Colors.white),
                   color: context.primaryColor,
                   onTap: () {
-                    launch(
-                        "https://codecanyon.net/item/granth-flutter-ebook-app-admin-panel/26129119?s_rank=13");
+                    launch("https://thebrainbooks.net");
                   },
                 ),
               ],
             ),
           ),
-          if (_bannerAd != null)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: AdWidget(ad: _bannerAd)
-                  .withWidth(AdSize.banner.width.toDouble())
-                  .withHeight(
-                    AdSize.banner.height.toDouble(),
-                  ),
-            ),
+          // if (_bannerAd != null)
+          //   Positioned(
+          //     bottom: 0,
+          //     left: 0,
+          //     right: 0,
+          //     child: AdWidget(ad: _bannerAd)
+          //         .withWidth(AdSize.banner.width.toDouble())
+          //         .withHeight(
+          //           AdSize.banner.height.toDouble(),
+          //         ),
+          //   ),
         ],
       ),
     );

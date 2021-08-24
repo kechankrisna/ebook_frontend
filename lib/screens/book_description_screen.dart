@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:ebook/component/book_product_component.dart';
 import 'package:ebook/main.dart';
 import 'package:ebook/models/response/author.dart';
@@ -71,7 +71,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
   bool mIsFirstTime = true;
   bool isLoading = false;
 
-  BannerAd _bannerAd;
+  // BannerAd _bannerAd;
 
   @override
   void initState() {
@@ -86,7 +86,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
 
     _bindBackgroundIsolate();
     FlutterDownloader.registerCallback(downloadCallback);
-    _bannerAd = createBannerAd()..load();
+    // _bannerAd = createBannerAd()..load();
     if (mAdShowCount < 5) {
       mAdShowCount++;
     } else {
@@ -107,7 +107,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
   @override
   void dispose() {
     _unbindBackgroundIsolate();
-    _bannerAd?.dispose();
+    // _bannerAd?.dispose();
 
     super.dispose();
   }
@@ -449,6 +449,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
 
   void readBook(context) async {
     if (await Permissions.storageAndAudioGranted()) {
+      print("filename= ${mBookDownloadTask.mDownloadTask.filename}");
       if (mBookDownloadTask.mDownloadTask.status ==
           DownloadTaskStatus.undefined) {
         var id = await requestDownload(
@@ -828,10 +829,10 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
                                         .theme.textTheme.subtitle2.color))
                             .paddingSymmetric(horizontal: 16),
                         16.height,
-                        if (_bannerAd != null)
-                          Container(
-                              child: AdWidget(ad: _bannerAd),
-                              height: _bannerAd.size.height.toDouble()),
+                        // if (_bannerAd != null)
+                        //   Container(
+                        //       child: AdWidget(ad: _bannerAd),
+                        //       height: _bannerAd.size.height.toDouble()),
                         16.height,
                         reviewWidget(snap),
                         Row(

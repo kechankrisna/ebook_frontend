@@ -37,7 +37,7 @@ class _CartScreenState extends State<CartScreen>
   var totalMrp = 0.0;
   var total = 0.0;
   var discount = 0.0;
-  var paymentMethod = "";
+  var paymentMethod = LOCALEBANK;
   var userId;
   var userEmail;
   var phoneNo;
@@ -45,6 +45,7 @@ class _CartScreenState extends State<CartScreen>
   var platform;
   bool isPayPalEnabled = false;
   bool isPayTmEnabled = false;
+  bool isPayLocalBankEnabled = true;
   var authorization;
 
   @override
@@ -175,6 +176,19 @@ class _CartScreenState extends State<CartScreen>
         context, total, getOrderDetail().toJson(), paymentMethod);
   }
 
+  processLocaleBankPayment(context) async {
+    showLoading(true);
+    var json = getOrderDetail().toJson();
+    json["payment_type"] = "3";
+
+    CartPayment.payWithLocalBank(context, total, json).then((res) {
+      toast(keyString(context, "transaction will be checked"));
+    }).catchError((error) {
+      showLoading(false);
+      toast(error.toString());
+    });
+  }
+
   processBrainTreePayment(context, token) async {
     showLoading(true);
     CartPayment.paywithPayPal(
@@ -191,7 +205,7 @@ class _CartScreenState extends State<CartScreen>
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     placeOrder() {
-      if (!isPayTmEnabled && !isPayPalEnabled) {
+      if (!isPayTmEnabled && !isPayPalEnabled && !isPayLocalBankEnabled) {
         toast("Payment option are not available");
         return;
       }
@@ -200,6 +214,8 @@ class _CartScreenState extends State<CartScreen>
           getClientToken(context);
         } else if (paymentMethod == PAYTM) {
           processPayTmPayment(context);
+        } else if (paymentMethod == LOCALEBANK) {
+          processLocaleBankPayment(context);
         }
       } else {
         toast(keyString(context, "error_select_payment_option"));

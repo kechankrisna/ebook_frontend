@@ -1,4 +1,4 @@
-const mBaseUrl = 'http://192.168.10.23:8000/api/';
+const mBaseUrl = 'http://192.168.1.61:8000/api/';
 
 /// fonts
 const font_regular = 'Regular';
@@ -66,6 +66,7 @@ const WISH_DATA_ITEM_CHANGED = "wishlist_item_changed";
 //Payment MethodCall
 const PAYPAL = 'paypal';
 const PAYTM = 'paytm';
+const LOCALEBANK = 'localebank';
 
 //Book Type
 const type_top_search = "top_search_book";

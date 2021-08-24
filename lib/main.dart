@@ -1,15 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:ebook/models/language_model.dart';
 import 'package:ebook/screens/splash_screen.dart';
 import 'package:ebook/store/AppStore.dart';
 import 'package:ebook/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 import 'app_localizations.dart';
 import 'app_theme.dart';
@@ -28,7 +31,7 @@ void main() async {
 //  FirebaseAdMob.instance.initialize(appId: Platform.isAndroid?android_appid:ios_appid);
   await FlutterDownloader.initialize(debug: true);
   await initialize();
-  MobileAds.instance.initialize();
+  // MobileAds.instance.initialize();
 
   if (getBoolAsync(IS_DARK_THEME)) {
     appStore.setDarkMode(true);
@@ -52,6 +55,10 @@ void main() async {
   oneSignal.consentGranted(true);
   oneSignal.requiresUserPrivacyConsent();
 
+  if (Platform.isAndroid) {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+
   runApp(MyApp());
 }
 
@@ -61,7 +68,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => MaterialApp(
