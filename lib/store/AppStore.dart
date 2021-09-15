@@ -4,7 +4,7 @@ import 'package:ebook/utils/constants.dart';
 import 'package:ebook/utils/resources/colors.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../main.dart';
 
@@ -54,8 +54,8 @@ abstract class AppStoreBase with Store {
 
     setValue(IS_NOTIFICATION_ON, val);
 
-    if (isMobile) {
-      OneSignal.shared.disablePush(!val);
-    }
+    // if (isMobile) {
+    //   OneSignal.shared.disablePush(!val);
+    // }
   }
 }

@@ -14,7 +14,7 @@ import 'package:ebook/utils/constants.dart';
 import 'package:ebook/utils/resources/images.dart';
 import 'package:html/parser.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 

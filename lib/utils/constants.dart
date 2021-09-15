@@ -1,4 +1,4 @@
-const mBaseUrl = 'http://192.168.1.61:8000/api/';
+const mBaseUrl = 'https://dashboard.thebrainbooks.net/api/';
 
 /// fonts
 const font_regular = 'Regular';

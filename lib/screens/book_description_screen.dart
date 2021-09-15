@@ -86,15 +86,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
 
     _bindBackgroundIsolate();
     FlutterDownloader.registerCallback(downloadCallback);
-    // _bannerAd = createBannerAd()..load();
-    if (mAdShowCount < 5) {
-      mAdShowCount++;
-    } else {
-      mAdShowCount = 0;
-      createInterstitialAd().catchError((e) {
-        //
-      });
-    }
+    
   }
 
   @override

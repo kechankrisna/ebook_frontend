@@ -27,7 +27,7 @@ import 'package:ebook/utils/constants.dart';
 import 'package:ebook/utils/resources/images.dart';
 import 'package:ebook/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../app_localizations.dart';
 
@@ -87,31 +87,31 @@ class _HomeScreenState extends State<HomeScreen>
         }
         fetchWishListData(context);
       });
-      if (mounted) {
-        if (isMobile) {
-          OneSignal.shared.setNotificationOpenedHandler(
-              (OSNotificationOpenedResult result) async {
-            Map<String, dynamic> data = result.notification.rawPayload;
-            if (data != null) {
-              var payload = NotificationPayload.fromJson(data);
-              onReadNotification(payload.notificationId);
-              if (payload.type != null && payload.type.toString().isNotEmpty) {
-                if (payload.type == "book_added") {
-                  if (getIntAsync(DETAIL_PAGE_VARIANT) == 1) {
-                    BookDescriptionScreen(
-                            bookDetail: BookDetail(bookId: payload.bookId))
-                        .launch(context);
-                  } else {
-                    BookDescriptionScreen2(
-                            bookDetail: BookDetail(bookId: payload.bookId))
-                        .launch(context);
-                  }
-                }
-              }
-            }
-          });
-        }
-      }
+      // if (mounted) {
+      //   if (isMobile) {
+      //     OneSignal.shared.setNotificationOpenedHandler(
+      //         (OSNotificationOpenedResult result) async {
+      //       Map<String, dynamic> data = result.notification.rawPayload;
+      //       if (data != null) {
+      //         var payload = NotificationPayload.fromJson(data);
+      //         onReadNotification(payload.notificationId);
+      //         if (payload.type != null && payload.type.toString().isNotEmpty) {
+      //           if (payload.type == "book_added") {
+      //             if (getIntAsync(DETAIL_PAGE_VARIANT) == 1) {
+      //               BookDescriptionScreen(
+      //                       bookDetail: BookDetail(bookId: payload.bookId))
+      //                   .launch(context);
+      //             } else {
+      //               BookDescriptionScreen2(
+      //                       bookDetail: BookDetail(bookId: payload.bookId))
+      //                   .launch(context);
+      //             }
+      //           }
+      //         }
+      //       }
+      //     });
+      //   }
+      // }
       isUserLogin = await getBool(IS_LOGGED_IN);
       // fetchDashboardData();
       if (isUserLogin) {

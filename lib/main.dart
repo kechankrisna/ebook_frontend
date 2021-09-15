@@ -11,7 +11,7 @@ import 'package:ebook/screens/splash_screen.dart';
 import 'package:ebook/store/AppStore.dart';
 import 'package:ebook/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 import 'app_localizations.dart';
@@ -23,7 +23,7 @@ Language language;
 List<Language> languages = Language.getLanguages();
 AppLocalizations appLocalizations;
 int mAdShowCount = 0;
-OneSignal oneSignal = OneSignal();
+// OneSignal oneSignal = OneSignal();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,17 +43,17 @@ void main() async {
   appStore
       .setNotification(getBoolAsync(IS_NOTIFICATION_ON, defaultValue: true));
 
-  await OneSignal.shared.setAppId(oneSignalAppId);
+  // await OneSignal.shared.setAppId(oneSignalAppId);
 
-  OneSignal.shared.setNotificationWillShowInForegroundHandler(
-      (OSNotificationReceivedEvent event) {
-    return event?.complete(event.notification);
-  });
+  // OneSignal.shared.setNotificationWillShowInForegroundHandler(
+  //     (OSNotificationReceivedEvent event) {
+  //   return event?.complete(event.notification);
+  // });
 
-  oneSignal.disablePush(false);
+  // oneSignal.disablePush(false);
 
-  oneSignal.consentGranted(true);
-  oneSignal.requiresUserPrivacyConsent();
+  // oneSignal.consentGranted(true);
+  // oneSignal.requiresUserPrivacyConsent();
 
   if (Platform.isAndroid) {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
