@@ -27,10 +27,8 @@ int mAdShowCount = 0;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-//  FirebaseAdMob.instance.initialize(appId: Platform.isAndroid?android_appid:ios_appid);
   await FlutterDownloader.initialize(debug: true);
   await initialize();
-  // MobileAds.instance.initialize();
 
   if (getBoolAsync(IS_DARK_THEME)) {
     appStore.setDarkMode(true);
@@ -75,6 +73,7 @@ class MyAppState extends State<MyApp> {
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
         localeResolutionCallback: (locale, supportedLocales) => locale,
