@@ -13,7 +13,7 @@ class HomeSliderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliderWidget(
       viewportFraction: 0.9,
-      height: 250,
+      height: 200,
       enlargeCenterPage: true,
       autoPlay: true,
       autoPlayInterval: 3.seconds,
@@ -22,7 +22,7 @@ class HomeSliderWidget extends StatelessWidget {
           builder: (BuildContext context) {
             return Container(
               width: MediaQuery.of(context).size.width,
-              height: 250,
+              height: 200,
               margin: EdgeInsets.symmetric(horizontal: 4.0),
               child: Card(
                 semanticContainer: true,

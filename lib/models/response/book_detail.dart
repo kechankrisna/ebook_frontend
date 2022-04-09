@@ -62,7 +62,7 @@ class BookDetail {
     return BookDetail(
         authorName: json['author_name'],
         backCover: json['back_cover'] != null ? json['back_cover'] : null,
-        bookId: json['book_id'],
+        bookId: int.tryParse("${json['book_id']}"),
         categoryName: json['category_name'],
         dateOfPublication: json['date_of_publication'],
         description: json['description'],
