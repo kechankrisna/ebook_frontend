@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:ebook/models/language_model.dart';
 import 'package:ebook/screens/splash_screen.dart';
 import 'package:ebook/store/AppStore.dart';

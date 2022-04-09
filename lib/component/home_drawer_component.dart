@@ -191,7 +191,7 @@ class HomeDrawerState extends State<HomeDrawer> {
                   onTap: () async {
                     showConfirmDialogCustom(
                       context,
-                      onAccept: () {
+                      onAccept: (_) {
                         finish(context);
                         doLogout(context);
                       },
