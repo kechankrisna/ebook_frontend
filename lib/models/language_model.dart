@@ -4,14 +4,15 @@ class Language {
   int id;
   String name;
   String languageCode;
+  String countryCode;
   String flag;
 
-  Language(this.id, this.name, this.languageCode, this.flag);
+  Language(this.id, this.name, this.languageCode, this.countryCode, this.flag);
 
   static List<Language> getLanguages() {
     return <Language>[
-      Language(0, 'English', 'en', 'assets/flags/ic_us.png'),
-      Language(1, 'Khmer', 'km', 'assets/flags/ic_km.png'),
+      Language(0, 'English', 'en', 'US', 'assets/flags/ic_us.png'),
+      Language(1, 'Khmer', 'km', 'KH', 'assets/flags/ic_km.png'),
     ];
   }
 
@@ -29,7 +30,7 @@ class Language {
     List<Locale> list = [];
 
     getLanguages().forEach((element) {
-      list.add(Locale(element.languageCode, ''));
+      list.add(Locale(element.languageCode, element.countryCode));
     });
 
     return list;
