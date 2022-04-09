@@ -73,3 +73,7 @@ const type_top_search = "top_search_book";
 const type_recommended = "recommended_book";
 const type_popular = "popular_book";
 const type_top_sell = "top_sell_book";
+
+
+/// About us
+const aboutUSContent = '''We’ve moved on to our smartphones and tablets to read while we’re on the go. Ebook is an flutter eBook application that takes your reading experience to the next level. You can read online as well as offline. With its unique and eye-soothing color palette and design, Ebook ensures the most engaging escapade for readers. This excellent app supports all major types of PDF files. The run-through is extremely easy providing users ease to browse, look for his/her favourite author, build a wishlist and read anywhere, anytime.''';

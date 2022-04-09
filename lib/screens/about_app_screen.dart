@@ -1,3 +1,4 @@
+import 'package:ebook/utils/constants.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 // import 'package:ebook/utils/admob_utils.dart';
@@ -61,7 +62,7 @@ class _AboutAppState extends State<AboutApp> {
                             children: <Widget>[
                               Icon(Icons.copyright, size: 14),
                               4.width,
-                              Text('2020 ${snap.data.appName.validate()}',
+                              Text('2022 ${snap.data.appName.validate()}',
                                   style: primaryTextStyle(
                                       color: context
                                           .theme.textTheme.headline6.color)),
@@ -80,14 +81,10 @@ class _AboutAppState extends State<AboutApp> {
                 ),
                 16.height,
                 Text(
-                  'We’ve moved on to our smartphones and tablets to read while we’re on the go. Ebook is an flutter eBook '
-                  'application that takes your reading experience to the next level. You can read online as well as offline.'
-                  ' With its unique and eye-soothing color palette and design, Ebook ensures the most engaging escapade for '
-                  'readers. This excellent app supports all major types of PDF files. The run-through is extremely easy providing'
-                  ' users ease to browse, look for his/her favourite author,'
-                  ' build a wishlist and read anywhere, anytime.',
+                  aboutUSContent,
                   style: primaryTextStyle(
                       color: context.theme.textTheme.subtitle2.color),
+                  textAlign: TextAlign.start,
                 ),
                 32.height,
                 AppButton(
