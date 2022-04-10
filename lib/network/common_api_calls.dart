@@ -100,7 +100,9 @@ Future<void> fetchWishListData(context) async {
 doLogout(context) async {
   await isNetworkAvailable().then((bool) {
     if (bool) {
-      logout().then((result) async {
+      logout().then((result) async {}).catchError((error) {
+        toast(error.toString());
+      }).whenComplete(() async {
         await removeKey(TOKEN);
         await removeKey(USERNAME);
         await removeKey(NAME);
@@ -117,8 +119,6 @@ doLogout(context) async {
 
         await setValue(IS_LOGGED_IN, false);
         HomeScreen().launch(context);
-      }).catchError((error) {
-        toast(error.toString());
       });
     } else {
       toast(keyString(context, "error_network_no_internet"));
