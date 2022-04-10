@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ebook/network/common_api_calls.dart';
 import 'package:ebook/screens/about_app_screen.dart';
@@ -49,7 +47,7 @@ class HomeDrawerState extends State<HomeDrawer> {
     Widget profileWidget() => Container(
           alignment: Alignment.bottomLeft,
           width: double.infinity,
-          padding: EdgeInsets.fromLTRB(12.0, 40, 12.0, 40),
+          padding: EdgeInsets.all(12),
           color: Theme.of(context).primaryColor,
           child: getBoolAsync(IS_LOGGED_IN)
               ? GestureDetector(
@@ -57,31 +55,28 @@ class HomeDrawerState extends State<HomeDrawer> {
                     finish(context);
                     ProfileScreen().launch(context);
                   },
-                  child: Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: getStringAsync(USER_PROFILE).isNotEmpty
-                            ? NetworkImage(getStringAsync(USER_PROFILE))
-                            : AssetImage(ic_profile),
-                        radius: 40,
-                      ),
-                      16.width,
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(getStringAsync(USERNAME),
-                                style: boldTextStyle(color: Colors.white)),
-                            8.height,
-                            Text(getStringAsync(USER_EMAIL),
-                                style: primaryTextStyle(color: Colors.white)),
-                          ],
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundImage:
+                              getStringAsync(USER_PROFILE).isNotEmpty
+                                  ? NetworkImage(getStringAsync(USER_PROFILE))
+                                  : AssetImage(ic_profile),
+                          radius: 40,
                         ),
-                      ).expand()
-                    ],
-                  ),
-                )
+                        16.width,
+                        Text(getStringAsync(USERNAME),
+                            style: boldTextStyle(color: Colors.white)),
+                        8.height,
+                        Text(getStringAsync(USER_EMAIL),
+                            style: primaryTextStyle(color: Colors.white)),
+                      ],
+                    ),
+                  ).expand())
               : GestureDetector(
                   onTap: () {
                     finish(context);

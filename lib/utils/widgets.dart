@@ -220,3 +220,35 @@ Widget cartIcon(BuildContext context, cartCount) {
     radius: 12,
   );
 }
+
+class HorizontalHeading extends StatelessWidget {
+  final String title;
+  final bool showViewAll;
+  final VoidCallback onTap;
+  const HorizontalHeading(
+      {Key key, this.title, this.showViewAll = true, this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+            child: Text(title,
+                style: boldTextStyle(
+                  color: context.theme.textTheme.bodyMedium.color,
+                ))),
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
+            child: Text(keyString(context, "more").toUpperCase(),
+                style: secondaryTextStyle(
+                    color: Theme.of(context).textTheme.button.color)),
+          ).visible(showViewAll),
+        )
+      ],
+    ).paddingOnly(left: 12.0, right: 12.0, top: 8.0);
+  }
+}

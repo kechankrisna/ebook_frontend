@@ -348,7 +348,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
       /// key: _scaffoldKey,
-      backgroundColor: context.scaffoldBackgroundColor,
       drawer: HomeDrawer(),
       appBar: AppBar(
         title: Text(getBottomNavigationBarItem(selectedIndex).label),
@@ -398,8 +397,8 @@ class _HomeScreenState extends State<HomeScreen> {
               tooltip: keyString(context, "Top Charts")),
           BottomNavigationBarItem(
               icon: Icon(MdiIcons.libraryShelves),
-              label: keyString(context, "Libary"),
-              tooltip: keyString(context, "Libary")),
+              label: keyString(context, "lbl_my_library"),
+              tooltip: keyString(context, "lbl_my_library")),
         ],
       ),
     );

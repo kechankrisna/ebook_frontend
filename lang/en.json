@@ -152,5 +152,11 @@
     "night_mode": "Night Mode",
     "transaction id": "Transaction ID",
     "transaction will be checked": "Transaction will be checked",
-    "note": "Note"
+    "note": "Note",
+    "New Feed":"New Feed",
+    "Categories":"Categories",
+    "Store":"Store",
+    "Top Charts":"Top Charts",
+    "Libary":"Libary",
+    "more": "More"
 }
