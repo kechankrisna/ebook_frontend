@@ -7,6 +7,7 @@ import 'package:ebook/models/response/book_rating_list.dart';
 import 'package:ebook/models/response/category.dart';
 import 'package:ebook/models/response/dashboard_response.dart';
 import 'package:ebook/models/response/login_response.dart';
+import 'package:ebook/models/response/main_category.dart';
 import 'package:ebook/models/response/transaction_history.dart';
 import 'package:ebook/utils/constants.dart';
 import 'package:ebook/network/network_utils.dart';
@@ -151,6 +152,13 @@ Future<SubCategoryResponse> subCategories(request) async {
   return SubCategoryResponse.fromJson(await handleResponse(
       await buildHttpResponse('sub-category-list',
           request: request, method: HttpMethod.POST)));
+}
+
+Future<MainCategoryResponse> mainCategories(
+    [Map<dynamic, dynamic> request]) async {
+  return MainCategoryResponse.fromJson(await handleResponse(
+      await buildHttpResponse('category-list',
+          request: request, method: HttpMethod.GET)));
 }
 
 Future getNotificationList(request) async {
