@@ -32,9 +32,13 @@ Uri buildBaseUrl(String endPoint) {
 }
 
 Future<Response> buildHttpResponse(String endPoint,
-    {HttpMethod method = HttpMethod.GET, Map request}) async {
+    {HttpMethod method = HttpMethod.GET, Map request, Map queryParams}) async {
   if (await isNetworkAvailable()) {
     var headers = buildHeaderTokens();
+    if (queryParams!=null) {
+      endPoint += "?" +
+          queryParams.keys.map((key) => "$key=${queryParams[key]}").join("&");
+    }
     Uri url = buildBaseUrl(endPoint);
 
     Response response;
@@ -49,6 +53,7 @@ Future<Response> buildHttpResponse(String endPoint,
     } else if (method == HttpMethod.PUT) {
       response = await put(url, body: jsonEncode(request), headers: headers);
     } else {
+      log('queryParams: $queryParams');
       response = await get(url, headers: headers);
     }
 

@@ -19,6 +19,8 @@ import 'package:ebook/utils/resources/images.dart';
 import 'package:ebook/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'main_category_chip_bar.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({Key key}) : super(key: key);
 
@@ -226,99 +228,71 @@ class _HomeViewState extends State<HomeView> with AfterLayoutMixin<HomeView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(
-          height: 50,
-          child: ListView.builder(
-            primary: false,
-            scrollDirection: Axis.horizontal,
-            itemCount: dashboardResponse.categoryBook.length,
-            itemBuilder: (_, index) {
-              final category = dashboardResponse.categoryBook[index];
-              return CategoryChip(
-                category: category,
-                selected: _category?.categoryId == category?.categoryId,
-                onPressed: () {
-                  setState(() {
-                    _category = category;
-                  });
-                },
-              );
-            },
-          ),
-        ),
-        Divider(height: 1),
-        Expanded(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              slider(dashboardResponse.slider),
-              //Collections
-              /// horizontalHeading(context, keyString(context, "lbl_collections"),
-              ///         showViewAll: false)
-              ///     .visible(mIsCategoryBook),
-              /// categoryList(dashboardResponse.categoryBook).visible(mIsCategoryBook),
+        slider(dashboardResponse.slider),
+        //Collections
+        /// horizontalHeading(context, keyString(context, "lbl_collections"),
+        ///         showViewAll: false)
+        ///     .visible(mIsCategoryBook),
+        /// categoryList(dashboardResponse.categoryBook).visible(mIsCategoryBook),
 
-              //Top Search Book
-              HorizontalHeading(
-                title: keyString(context, "top_search_books"),
-                onTap: () {
-                  ViewAllBooks(
-                          type: type_top_search,
-                          title: keyString(context, "top_search_books"))
-                      .launch(context);
-                },
-              ).visible(mIsTopSearchBook),
+        //Top Search Book
+        HorizontalHeading(
+          title: keyString(context, "top_search_books"),
+          onTap: () {
+            ViewAllBooks(
+                    type: type_top_search,
+                    title: keyString(context, "top_search_books"))
+                .launch(context);
+          },
+        ).visible(mIsTopSearchBook),
 
-              BookProductComponentPlus(dashboardResponse.topSearchBook)
-                  .visible(mIsTopSearchBook),
-              //Best Author
+        BookProductComponentPlus(dashboardResponse.topSearchBook)
+            .visible(mIsTopSearchBook),
+        //Best Author
 
-              /// HorizontalHeading(
-              ///     title: keyString(context, "best_author"),
-              ///     onTap: () {
-              ///       AuthorsListScreen().launch(context);
-              ///     }).visible(mIsTopAuthor),
-              /// authorList(dashboardResponse.topAuthor).visible(mIsTopAuthor),
-              //Recommended Books
+        /// HorizontalHeading(
+        ///     title: keyString(context, "best_author"),
+        ///     onTap: () {
+        ///       AuthorsListScreen().launch(context);
+        ///     }).visible(mIsTopAuthor),
+        /// authorList(dashboardResponse.topAuthor).visible(mIsTopAuthor),
+        //Recommended Books
 
-              HorizontalHeading(
-                  title: keyString(context, "recommended_books"),
-                  onTap: () {
-                    ViewAllBooks(
-                            type: type_recommended,
-                            title: keyString(context, "recommended_books"))
-                        .launch(context);
-                  }).visible(mIsRecommendedBook),
-              BookProductComponentPlus(dashboardResponse.recommendedBook)
-                  .visible(mIsRecommendedBook),
-              //Popular Books
+        HorizontalHeading(
+            title: keyString(context, "recommended_books"),
+            onTap: () {
+              ViewAllBooks(
+                      type: type_recommended,
+                      title: keyString(context, "recommended_books"))
+                  .launch(context);
+            }).visible(mIsRecommendedBook),
+        BookProductComponentPlus(dashboardResponse.recommendedBook)
+            .visible(mIsRecommendedBook),
+        //Popular Books
 
-              HorizontalHeading(
-                  title: keyString(context, "popular_books"),
-                  onTap: () {
-                    ViewAllBooks(
-                            type: type_popular,
-                            title: keyString(context, "popular_books"))
-                        .launch(context);
-                  }).visible(mIsRecommendedBook),
-              BookProductComponentPlus(
-                dashboardResponse.popularBook,
-              ).visible(mIsRecommendedBook),
-              //Top Selling
+        HorizontalHeading(
+            title: keyString(context, "popular_books"),
+            onTap: () {
+              ViewAllBooks(
+                      type: type_popular,
+                      title: keyString(context, "popular_books"))
+                  .launch(context);
+            }).visible(mIsRecommendedBook),
+        BookProductComponentPlus(
+          dashboardResponse.popularBook,
+        ).visible(mIsRecommendedBook),
+        //Top Selling
 
-              HorizontalHeading(
-                  title: keyString(context, "lbl_top_selling"),
-                  onTap: () {
-                    ViewAllBooks(
-                            type: type_top_sell,
-                            title: keyString(context, "lbl_top_selling"))
-                        .launch(context);
-                  }).visible(mIsTopSellBook),
-              BookProductComponentPlus(dashboardResponse.topSellBook)
-                  .visible(mIsTopSellBook),
-            ],
-          ),
-        ))
+        HorizontalHeading(
+            title: keyString(context, "lbl_top_selling"),
+            onTap: () {
+              ViewAllBooks(
+                      type: type_top_sell,
+                      title: keyString(context, "lbl_top_selling"))
+                  .launch(context);
+            }).visible(mIsTopSellBook),
+        BookProductComponentPlus(dashboardResponse.topSellBook)
+            .visible(mIsTopSellBook),
       ],
     );
   }
@@ -333,31 +307,44 @@ class _HomeViewState extends State<HomeView> with AfterLayoutMixin<HomeView> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: FutureBuilder<DashboardResponse>(
-        future: getDashboard(),
-        builder: (_, snap) {
-          if (!snap.hasData) return Loader();
-
-          if (snap.hasError) {
-            Widget error = noData;
-
-            if (snap.error is SocketException) {
-              error = noInternetError;
-            }
-
-            return snapWidgetHelper(snap,
-                checkHasData: true, errorWidget: error);
-          }
-          setBoolAsync(IS_PAYPAL_ENABLED, snap.data.isPayPalEnabled);
-          setBoolAsync(IS_PAYTM_ENABLED, snap.data.isPayTmEnabled);
-          return RefreshIndicator(
-            onRefresh: () async {
+      child: Column(
+        children: [
+          MainCategoryChipBar(
+            onTap: (category) {
+              getDashboard({'category_id': category?.categoryId});
               setState(() {});
               return Future.value(false);
             },
-            child: snap.hasData ? containerBody(snap.data) : Loader(),
-          );
-        },
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: FutureBuilder<DashboardResponse>(
+                future: getDashboard(),
+                builder: (_, snap) {
+                  if (!snap.hasData) return Loader();
+
+                  if (snap.hasError) {
+                    Widget error = noData;
+
+                    if (snap.error is SocketException) {
+                      error = noInternetError;
+                    }
+
+                    return snapWidgetHelper(snap,
+                        checkHasData: true, errorWidget: error);
+                  }
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      setState(() {});
+                      return Future.value(false);
+                    },
+                    child: snap.hasData ? containerBody(snap.data) : Loader(),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -414,40 +401,5 @@ class _HomeViewCartIconState extends State<HomeViewCartIcon> {
   @override
   Widget build(BuildContext context) {
     return cartIcon(context, cartCount).visible(isUserLogin);
-  }
-}
-
-class CategoryChip extends StatelessWidget {
-  final Category category;
-  final bool selected;
-  final VoidCallback onPressed;
-  const CategoryChip(
-      {Key key,
-      @required this.category,
-      this.selected = false,
-      @required this.onPressed})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final themeData = Theme.of(context);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: selected
-              ? BorderSide(color: themeData.primaryColor, width: 3)
-              : BorderSide.none,
-        ),
-      ),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(
-          category.name,
-          style: themeData.textTheme.bodyText1.copyWith(
-            color: selected ? themeData.primaryColor : Colors.grey,
-          ),
-        ),
-      ),
-    );
   }
 }

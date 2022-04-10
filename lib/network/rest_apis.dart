@@ -24,9 +24,10 @@ Future register(request) async {
       request: request, method: HttpMethod.POST));
 }
 
-Future<DashboardResponse> getDashboard() async {
-  return DashboardResponse.fromJson(
-      await handleResponse(await buildHttpResponse('dashboard-detail')));
+Future<DashboardResponse> getDashboard(
+    [Map<String, dynamic> queryParams]) async {
+  return DashboardResponse.fromJson(await handleResponse(
+      await buildHttpResponse('dashboard-detail', queryParams: queryParams)));
 }
 
 Future<DashboardResponse> getViewAllBookNextPage(type, page,
