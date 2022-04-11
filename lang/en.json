@@ -31,6 +31,7 @@
     "hint_contact_no": "Contact Number *",
     "lbl_submit": "Submit",
     "lbl_rateBook": "Rate book",
+    "lbl_readBook": "Read Book",
     "msg_logout": "Are you sure want to logout?",
     "lbl_top_selling": "Top Selling Books",
     "error_network_no_internet": "No Internet connection",

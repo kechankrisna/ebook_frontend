@@ -2,6 +2,8 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:ebook/app_localizations.dart';
+import 'package:ebook/screens/book_description_screen.dart';
+import 'package:ebook/screens/book_description_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 
@@ -59,6 +61,7 @@ class _BookGridActionButtonState extends State<BookGridActionButton> {
   @override
   void initState() {
     super.initState();
+
     /// 2.seconds.delay.then((value) => setStatusBarColor(
     ///     Theme.of(context).cardTheme.color,
     ///     statusBarBrightness: Brightness.light));
@@ -336,71 +339,93 @@ class _BookGridActionButtonState extends State<BookGridActionButton> {
       constraints: BoxConstraints(minWidth: 200),
       padding: EdgeInsets.zero,
       itemBuilder: (_) => [
-        PopupMenuItem(
-          onTap: () {
-            if (getBoolAsync(IS_LOGGED_IN)) {
-              if (isExistInCart) {
-                toast("Already exist in cart");
+        if (mBookDetail.isPurchase == 0 && mBookDetail.discountedPrice != 0)
+          PopupMenuItem(
+            onTap: () {
+              if (getBoolAsync(IS_LOGGED_IN)) {
+                if (isExistInCart) {
+                  toast("Already exist in cart");
+                } else {
+                  addBookToCart();
+                  LiveStream().on("updateCart", (status) {
+                    if (status ?? false) {
+                      setState(() {});
+                    }
+                  });
+                }
               } else {
-                addBookToCart();
-                LiveStream().on("updateCart", (status) {
-                  if (status ?? false) {
-                    setState(() {});
-                  }
-                });
+                SignInScreen().launch(context);
               }
-            } else {
-              SignInScreen().launch(context);
-            }
-          },
-          child: Row(
-            children: [
-              Icon(MdiIcons.creditCardOutline, size: 19).paddingRight(10),
-              Expanded(child: Text(keyString(context, "lbl_buy_now"))),
-            ],
+            },
+            child: Row(
+              children: [
+                Icon(MdiIcons.creditCardOutline, size: 19).paddingRight(10),
+                Expanded(child: Text(keyString(context, "lbl_buy_now"))),
+              ],
+            ),
           ),
-        ),
-        PopupMenuItem(
-          onTap: () async {
-            if (await Permissions.storageGranted()) {
-              sampleClick(context);
-            }
-          },
-          child: Row(
-            children: [
-              Icon(MdiIcons.download, size: 19).paddingRight(10),
-              Expanded(child: Text(keyString(context, "lbl_samples"))),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          enabled: mBookDetail.isPurchase == 0,
-          onTap: () {
-            if (getBoolAsync(IS_LOGGED_IN)) {
-              setState(() {
-                mBookDetail.isWishList = mBookDetail.isWishList == 0 ? 1 : 0;
-              });
-              addRemoveToWishList(mBookDetail.isWishList);
-            } else {
-              SignInScreen().launch(context);
-            }
-          },
-          child: Row(
-            children: [
-              Icon(
-                      mBookDetail.isWishList
-                                  .toString()
-                                  .toInt()
-                                  .validate(value: 0) ==
-                              0
-                          ? MdiIcons.bookmarkOutline
-                          : MdiIcons.bookmark,
-                      size: 19)
-                  .paddingRight(10),
-              Expanded(child: Text(keyString(context, "lbl_wish_list"))),
-            ],
-          ),
-        ),
+
+        /// if (mBookDetail.isPurchase == 1 || mBookDetail.discountedPrice == 0)
+        ///   PopupMenuItem(
+        ///     onTap: () {
+        ///       readBook(context);
+        ///     },
+        ///     child: Row(
+        ///       children: [
+        ///         Icon(MdiIcons.bookOpen, size: 19).paddingRight(10),
+        ///         Expanded(child: Text(keyString(context, "lbl_readBook"))),
+        ///       ],
+        ///     ),
+        ///   ),
+        /// 
+        /// PopupMenuItem(
+        ///   onTap: () {
+        ///     /// TODO
+        ///     /// if (await Permissions.storageGranted()) {
+        ///     ///   sampleClick(context);
+        ///     /// }
+        ///     if (getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 0) == 1) {
+        ///       BookDescriptionScreen(bookDetail: mBookDetail).launch(context);
+        ///     } else {
+        ///       BookDescriptionScreen2(bookDetail: mBookDetail).launch(context);
+        ///     }
+        ///   },
+        ///   child: Row(
+        ///     children: [
+        ///       Icon(MdiIcons.download, size: 19).paddingRight(10),
+        ///       Expanded(child: Text(keyString(context, "lbl_samples"))),
+        ///     ],
+        ///   ),
+        /// ),
+
+        /// PopupMenuItem(
+        ///   enabled: mBookDetail.isPurchase == 0,
+        ///   onTap: () {
+        ///     if (getBoolAsync(IS_LOGGED_IN)) {
+        ///       setState(() {
+        ///         mBookDetail.isWishList = mBookDetail.isWishList == 0 ? 1 : 0;
+        ///       });
+        ///       addRemoveToWishList(mBookDetail.isWishList);
+        ///     } else {
+        ///       SignInScreen().launch(context);
+        ///     }
+        ///   },
+        ///   child: Row(
+        ///     children: [
+        ///       Icon(
+        ///               mBookDetail.isWishList
+        ///                           .toString()
+        ///                           .toInt()
+        ///                           .validate(value: 0) ==
+        ///                       0
+        ///                   ? MdiIcons.bookmarkOutline
+        ///                   : MdiIcons.bookmark,
+        ///               size: 19)
+        ///           .paddingRight(10),
+        ///       Expanded(child: Text(keyString(context, "lbl_wish_list"))),
+        ///     ],
+        ///   ),
+        /// ),
 
         /// share
         PopupMenuItem(
