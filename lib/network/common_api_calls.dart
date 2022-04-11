@@ -103,6 +103,7 @@ doLogout(context) async {
       logout().then((result) async {}).catchError((error) {
         toast(error.toString());
       }).whenComplete(() async {
+        HomeScreen().launch(context);
         await removeKey(TOKEN);
         await removeKey(USERNAME);
         await removeKey(NAME);
@@ -118,7 +119,6 @@ doLogout(context) async {
         await removeKey(WISH_LIST_COUNT);
 
         await setValue(IS_LOGGED_IN, false);
-        HomeScreen().launch(context);
       });
     } else {
       toast(keyString(context, "error_network_no_internet"));

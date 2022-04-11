@@ -14,6 +14,7 @@ import 'package:ebook/screens/wishlist_screens.dart';
 import 'package:ebook/utils/common.dart';
 import 'package:ebook/utils/constants.dart';
 import 'package:ebook/utils/resources/images.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:share/share.dart';
 
@@ -36,19 +37,20 @@ class HomeDrawerState extends State<HomeDrawer> {
 
   @override
   void dispose() {
-    setStatusBarColor(color);
+    /// setStatusBarColor(color);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    setStatusBarColor(Theme.of(context).primaryColor);
-    color = context.scaffoldBackgroundColor;
+    /// setStatusBarColor(Theme.of(context).primaryColor);
+    /// color = context.scaffoldBackgroundColor;
     Widget profileWidget() => Container(
           alignment: Alignment.bottomLeft,
           width: double.infinity,
           padding: EdgeInsets.all(12),
-          color: Theme.of(context).primaryColor,
+
+          /// color: Theme.of(context).primaryColor,
           child: getBoolAsync(IS_LOGGED_IN)
               ? GestureDetector(
                   onTap: () {
@@ -69,11 +71,10 @@ class HomeDrawerState extends State<HomeDrawer> {
                           radius: 40,
                         ),
                         16.width,
-                        Text(getStringAsync(USERNAME),
-                            style: boldTextStyle(color: Colors.white)),
+                        Text(getStringAsync(USERNAME), style: boldTextStyle()),
                         8.height,
                         Text(getStringAsync(USER_EMAIL),
-                            style: primaryTextStyle(color: Colors.white)),
+                            style: primaryTextStyle()),
                       ],
                     ),
                   ).expand())
@@ -83,19 +84,17 @@ class HomeDrawerState extends State<HomeDrawer> {
                     SignInScreen().launch(context);
                   },
                   child: Text(keyString(context, "lbl_login"),
-                      style: boldTextStyle(size: 24, color: Colors.white))),
+                      style: boldTextStyle(
+                        size: 24,
+                      ))),
         );
     Widget body() => Column(
           children: <Widget>[
             profileWidget(),
+            Divider(),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_home,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.homeOutline),
               title: keyString(context, "lbl_dashboard"),
               onTap: () {
                 finish(context);

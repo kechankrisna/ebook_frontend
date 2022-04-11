@@ -180,39 +180,43 @@ class BookProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: cachedImage(
-              bookDetail.frontCover,
-              fit: BoxFit.fill,
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: cachedImage(
+                bookDetail.frontCover,
+                fit: BoxFit.fitHeight,
+                width: double.infinity,
+                alignment: Alignment.center,
+              ),
             ),
-          ),
-          Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                    child: Text(
-                  "${bookDetail.name.toString().validate()}",
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: themeData.textTheme.bodyMedium,
-                )),
-                BookGridActionButton(bookDetail: bookDetail)
-              ],
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Text(
+                    "${bookDetail.name.toString().validate()}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: themeData.textTheme.bodyMedium,
+                  )),
+                  BookGridActionButton(bookDetail: bookDetail)
+                ],
+              ),
+            ).withHeight(36).paddingSymmetric(vertical: 5),
+            Text(
+              "${bookDetail.price.toString().toCurrencyFormat().validate()}",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
-          ).withHeight(36).paddingSymmetric(vertical: 5),
-          Text(
-            "${bookDetail.price.toString().toCurrencyFormat().validate()}",
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
