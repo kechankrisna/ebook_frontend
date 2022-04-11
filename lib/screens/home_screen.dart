@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:ebook/screens/controllers/blog_controller.dart';
 import 'package:ebook/screens/controllers/main_category_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -350,7 +351,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final ThemeData themeData = Theme.of(context);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => MainCategoryController())
+        ChangeNotifierProvider(create: (_) => MainCategoryController()),
+        ChangeNotifierProvider(create: (_) => BlogController())
       ],
       child: Scaffold(
         drawer: HomeDrawer(),
