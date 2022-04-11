@@ -1,3 +1,4 @@
+import 'package:ebook/screens/home_screen/top_charts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:ebook/component/book_widget_component.dart';
 import 'package:ebook/models/response/book_detail.dart';
@@ -176,6 +177,7 @@ class _SearchScreenState extends State<SearchScreen> {
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           BookDetail bookDetail = list[index];
+
           return InkWell(
             onTap: () {
               if (getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 0) == 1) {
@@ -184,7 +186,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 BookDescriptionScreen2(bookDetail: list[index]).launch(context);
               }
             },
-            child: BookItemWidget(bookDetail: bookDetail),
+            child: BookListTile(bookDetail: bookDetail),
+
+            /// child: BookItemWidget(bookDetail: bookDetail),
           );
         },
       ),

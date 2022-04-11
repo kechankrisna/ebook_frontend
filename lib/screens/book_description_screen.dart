@@ -86,7 +86,6 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
 
     _bindBackgroundIsolate();
     FlutterDownloader.registerCallback(downloadCallback);
-    
   }
 
   @override
@@ -188,6 +187,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
                             .paddingAll(10),
                         Divider(thickness: 0.5),
                         RatingBar.builder(
+                          tapOnlyMode: true,
                           initialRating: rating,
                           minRating: 0,
                           glow: false,
@@ -581,6 +581,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
             setState(() {
               mBookDetail.totalRating = "$value";
             });
+            showRatingDialog(context);
           },
         ),
         6.width,
@@ -926,4 +927,3 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen> {
     );
   }
 }
-

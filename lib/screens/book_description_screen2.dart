@@ -755,6 +755,11 @@ class _BookDescriptionScreen2State extends State<BookDescriptionScreen2>
                                                 itemBuilder: (context, _) =>
                                                     Icon(Icons.star,
                                                         color: Colors.amber),
+                                                onRatingUpdate: (v) {
+                                                  rating = v;
+                                                  setState(() {});
+                                                  showRatingDialog(context);
+                                                },
                                               ),
                                               Text(
                                                       double.parse(mBookDetail

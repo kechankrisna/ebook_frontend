@@ -377,6 +377,7 @@ class BookListTile extends StatelessWidget {
                         Icon(Icons.star, color: Colors.amber),
                     onRatingUpdate: (double value) {},
                   ),
+                  Text(bookDetail.totalRating.toString()),
                   Row(
                     children: [
                       Spacer(),
