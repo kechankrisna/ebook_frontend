@@ -76,7 +76,7 @@ class HomeDrawerState extends State<HomeDrawer> {
                             style: primaryTextStyle()),
                       ],
                     ),
-                  ).expand())
+                  ))
               : GestureDetector(
                   onTap: () {
                     finish(context);

@@ -381,7 +381,7 @@ class BookListTile extends StatelessWidget {
                     children: [
                       Spacer(),
                       Text(
-                          "${bookDetail.price.toString().toCurrencyFormat().validate()}")
+                          "${bookDetail.discountedPrice.toString().toCurrencyFormat().validate()}")
                     ],
                   )
                 ],

@@ -190,7 +190,7 @@ class BookProductGrid extends StatelessWidget {
             Expanded(
               child: cachedImage(
                 bookDetail.frontCover,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fill,
                 width: double.infinity,
                 alignment: Alignment.center,
               ),

@@ -298,69 +298,45 @@ class _LibraryViewState extends State<LibraryView>
   Widget getList(List<DownloadedBook> list, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 16),
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 16,
+      child: GridView.count(
+        crossAxisCount: 3,
+        mainAxisSpacing: 0,
+        crossAxisSpacing: 0,
+        childAspectRatio: 0.6,
+        primary: false,
         children: list.map((e) {
           DownloadedBook bookDetail = list[list.indexOf(e)];
-          return Container(
-            padding: EdgeInsets.only(left: 8),
-            width: context.width() / 2 - 8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    onBookClick(context, bookDetail);
-                  },
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: <Widget>[
-                      cachedImage(bookDetail.frontCover,
-                              fit: BoxFit.fill,
-                              height: 250,
-                              width: context.width() / 2)
-                          .cornerRadiusWithClipRRect(8),
-                      bookDetail.status == DownloadTaskStatus.undefined
-                          ? Container(
-                              margin: EdgeInsets.all(4.0),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black.withOpacity(0.5)),
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(Icons.file_download,
-                                  size: 14, color: Colors.white))
-                          : bookDetail.status == DownloadTaskStatus.complete
-                              ? InkWell(
-                                  onTap: () {
-                                    remove(bookDetail, context);
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.all(4.0),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.black.withOpacity(0.2)),
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Icon(Icons.delete,
-                                        size: 14, color: Colors.red),
-                                  ),
-                                )
-                              : Container()
-                    ],
-                  ),
-                ),
-                8.height,
-                Text(
-                  bookDetail.bookName,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: boldTextStyle(
-                      color: context.theme.textTheme.headline6.color),
-                ),
-              ],
+          return InkWell(
+            onTap: () {
+              onBookClick(context, bookDetail);
+            },
+            child: DownloadBookProductGrid(
+              bookDetail: bookDetail,
+              actionButton: bookDetail.status == DownloadTaskStatus.undefined
+                  ? Container(
+                      margin: EdgeInsets.all(4.0),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black.withOpacity(0.5)),
+                      padding: EdgeInsets.all(4.0),
+                      child: Icon(Icons.file_download,
+                          size: 14, color: Colors.white))
+                  : bookDetail.status == DownloadTaskStatus.complete
+                      ? InkWell(
+                          onTap: () {
+                            remove(bookDetail, context);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(4.0),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(0.2)),
+                            padding: EdgeInsets.all(4.0),
+                            child:
+                                Icon(Icons.delete, size: 14, color: Colors.red),
+                          ),
+                        )
+                      : Container(),
             ),
           );
         }).toList(),
@@ -396,5 +372,51 @@ class _LibraryViewState extends State<LibraryView>
         purchasedList.addAll(purchased);
       });
     }
+  }
+}
+
+class DownloadBookProductGrid extends StatelessWidget {
+  final DownloadedBook bookDetail;
+  final Widget actionButton;
+  const DownloadBookProductGrid({Key key, this.bookDetail, this.actionButton})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: cachedImage(
+                bookDetail.frontCover,
+                fit: BoxFit.fill,
+                width: double.infinity,
+                alignment: Alignment.center,
+              ),
+            ),
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Text(
+                    "${bookDetail.bookName.toString().validate()}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: themeData.textTheme.bodyMedium,
+                  )),
+                  if (actionButton != null) actionButton,
+                ],
+              ),
+            ).withHeight(36).paddingSymmetric(vertical: 5),
+          ],
+        ),
+      ),
+    );
   }
 }

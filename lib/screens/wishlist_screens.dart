@@ -73,13 +73,19 @@ class _WishlistScreenState extends State<WishlistScreen>
         child: FutureBuilder<List<WishListItem>>(
           future: wishListItems(),
           builder: (_, snap) {
-            if (list.isEmpty) {
-              list.addAll(snap.data);
-            }
             if (snap.hasData) {
-              return Wrap(
-                runSpacing: 16,
-                spacing: 8,
+              ///
+              if (list.isEmpty) {
+                list.addAll(snap.data);
+              }
+
+              ///
+              return GridView.count(
+                crossAxisCount: 3,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                childAspectRatio: 0.6,
+                primary: false,
                 children: list.map(
                   (e) {
                     WishListItem data = list[list.indexOf(e)];
@@ -96,65 +102,7 @@ class _WishlistScreenState extends State<WishlistScreen>
                               .launch(context);
                         }
                       },
-                      child: Container(
-                        width: context.width() / 2 - 8,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              decoration: boxDecorationWithShadow(
-                                borderRadius: radiusOnly(
-                                    topLeft: 8,
-                                    topRight: 8,
-                                    bottomLeft: 8,
-                                    bottomRight: 8),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                backgroundColor: context.cardColor,
-                                border:
-                                    Border.all(color: Colors.white, width: 2.0),
-                                offset: Offset(3, 2),
-                              ),
-                              child: cachedImage(
-                                data.frontCover,
-                                fit: BoxFit.fill,
-                                height: 250,
-                                width: 170,
-                                radius: 0,
-                              ).cornerRadiusWithClipRRectOnly(
-                                  topLeft: 8,
-                                  topRight: 8,
-                                  bottomLeft: 8,
-                                  bottomRight: 8),
-                            ),
-                            10.height,
-                            Text(
-                              data.name
-                                  .toString()
-                                  .validate()
-                                  .capitalizeFirstLetter(),
-                              style: boldTextStyle(
-                                  color:
-                                      context.theme.textTheme.headline6.color,
-                                  size: 16),
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                            ),
-                            4.height,
-                            Text(
-                              data.authorName
-                                  .toString()
-                                  .validate()
-                                  .capitalizeFirstLetter(),
-                              style: primaryTextStyle(
-                                  size: 13,
-                                  color:
-                                      context.theme.textTheme.subtitle2.color),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
+                      child: WishListItemGrid(bookDetail: data),
                     );
                   },
                 ).toList(),
@@ -165,6 +113,59 @@ class _WishlistScreenState extends State<WishlistScreen>
         ),
       ),
       /* body: SingleChildScrollView(child: wishlist()),*/
+    );
+  }
+}
+
+class WishListItemGrid extends StatelessWidget {
+  final WishListItem bookDetail;
+  final Widget actionButton;
+  const WishListItemGrid({Key key, this.bookDetail, this.actionButton})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: cachedImage(
+                bookDetail.frontCover,
+                fit: BoxFit.fill,
+                width: double.infinity,
+                alignment: Alignment.center,
+              ),
+            ),
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Text(
+                    "${bookDetail.name.toString().validate()}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: themeData.textTheme.bodyMedium,
+                  )),
+                  if (actionButton != null) actionButton,
+                ],
+              ),
+            ).withHeight(36).paddingSymmetric(vertical: 5),
+            Container(
+              child: Text(
+                bookDetail.authorName,
+                maxLines: 2,
+                style: themeData.textTheme.caption,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 const mBaseUrl =
     'http://192.168.0.199/api/'; //https://dashboard.thebrainbooks.net
 const webUrl = "https://thebranbooks.net";
+const blogUrl = "https://www.reamker.com/";
 
 /// fonts
 const font_regular = 'Regular';
