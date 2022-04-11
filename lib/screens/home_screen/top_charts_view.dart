@@ -4,6 +4,7 @@ import 'package:ebook/models/response/book_list.dart';
 import 'package:ebook/models/response/category.dart';
 import 'package:ebook/network/rest_apis.dart';
 import 'package:ebook/screens/controllers/book_controller.dart';
+import 'package:ebook/screens/filters/book_filter.dart';
 import 'package:ebook/screens/home_screen/book_grid_action_button.dart';
 import 'package:ebook/screens/home_screen/main_category_chip_bar.dart';
 import 'package:ebook/utils/refresh_data_container.dart';
@@ -112,61 +113,15 @@ class _TopChartsViewState extends State<TopChartsView> {
               Flexible(
                 flex: 8,
                 fit: FlexFit.tight,
-                child: PopupMenuButton(
-                  position: PopupMenuPosition.under,
-                  constraints: BoxConstraints(
-                    maxHeight: size.height - 230,
-                  ),
-                  itemBuilder: (_) => _subCategories
-                      .map((e) => PopupMenuItem(
-                            child: Text(e.name),
-                            value: e,
-                          ))
-                      .toList(),
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(_category == null ? "All" : _category.name),
-                        Icon(MdiIcons.menuDown),
-                      ],
-                    ),
-                  ),
+                child: FilterbySubCategory(
+                  subCategories: _subCategories,
+                  category: _category,
                 ),
               ),
               Flexible(
                 flex: 4,
                 fit: FlexFit.tight,
-                child: PopupMenuButton(
-                  position: PopupMenuPosition.under,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (_) => _options
-                      .map((e) => PopupMenuItem(
-                            child: Text(e),
-                            value: e,
-                          ))
-                      .toList(),
-                  onSelected: (v) {
-                    setState(() => _option = v);
-
-                    ///
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(_option),
-                        Icon(MdiIcons.menuDown),
-                      ],
-                    ),
-                  ),
-                ),
+                child: FilterByBookPrice(),
               ),
             ],
           ),
@@ -174,6 +129,115 @@ class _TopChartsViewState extends State<TopChartsView> {
             child: TopChartsBookListView(),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class FilterbySubCategory extends StatefulWidget {
+  final Category category;
+  final List<Category> subCategories;
+  const FilterbySubCategory({Key key, this.subCategories, this.category})
+      : super(key: key);
+
+  @override
+  State<FilterbySubCategory> createState() => _FilterbySubCategoryState();
+}
+
+class _FilterbySubCategoryState extends State<FilterbySubCategory> {
+  Category _subcategory;
+
+  @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return PopupMenuButton(
+      position: PopupMenuPosition.under,
+      constraints: BoxConstraints(
+        maxHeight: size.height - 230,
+      ),
+      itemBuilder: (_) => widget.subCategories
+          .map((e) => PopupMenuItem(
+                child: Text(e.name),
+                value: e,
+              ))
+          .toList(),
+      onSelected: (v) {
+        setState(() {
+          _subcategory = v;
+        });
+        final controller = context.read<BookController>();
+        var _filter = controller.filter;
+        _filter.categoryId = _subcategory.categoryId;
+        _filter.subcategoryId = _subcategory.subCategoryId;
+        controller.updateFilter(_filter);
+        controller.refresh();
+      },
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(_subcategory == null
+                ? widget.category?.name ?? 'ALL'
+                : _subcategory.name),
+            Icon(MdiIcons.menuDown),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FilterByBookPrice extends StatefulWidget {
+  const FilterByBookPrice({Key key}) : super(key: key);
+
+  @override
+  State<FilterByBookPrice> createState() => _FilterByBookPriceState();
+}
+
+class _FilterByBookPriceState extends State<FilterByBookPrice> {
+  FilterByPrice _option = FilterByPrice.paid();
+  List<FilterByPrice> _options = FilterByPrice.values;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      position: PopupMenuPosition.under,
+      padding: EdgeInsets.zero,
+      itemBuilder: (_) => _options
+          .map((e) => PopupMenuItem(
+                child: Text(e.label.toUpperCase()),
+                value: e,
+              ))
+          .toList(),
+      onSelected: (v) {
+        setState(() => _option = v);
+        final controller = context.read<BookController>();
+        var _filter = controller.filter;
+        _filter.minPrice = _option.minPrice;
+        _filter.maxPrice = _option.maxPrice;
+        controller.updateFilter(_filter);
+        controller.refresh();
+      },
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(_option.label.toUpperCase()),
+            Icon(MdiIcons.menuDown),
+          ],
+        ),
       ),
     );
   }

@@ -115,3 +115,20 @@ class BookFilter {
         searchText.hashCode;
   }
 }
+
+class FilterByPrice {
+  String label;
+  double maxPrice;
+  double minPrice;
+  FilterByPrice({this.label, this.minPrice, this.maxPrice});
+
+  factory FilterByPrice.free() =>
+      FilterByPrice(label: "free", minPrice: 0, maxPrice: 0);
+  factory FilterByPrice.paid() =>
+      FilterByPrice(label: "paid", minPrice: 0.01, maxPrice: null);
+
+  static List<FilterByPrice> get values => [
+        FilterByPrice.paid(),
+        FilterByPrice.free(),
+      ];
+}
