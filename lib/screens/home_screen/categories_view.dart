@@ -2,6 +2,7 @@ import 'package:ebook/app_localizations.dart';
 import 'package:ebook/models/response/category.dart';
 import 'package:ebook/models/response/main_category.dart';
 import 'package:ebook/network/rest_apis.dart';
+import 'package:ebook/screens/category_book_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -91,10 +92,19 @@ class _CategoriesViewState extends State<CategoriesView> {
               itemCount: _subCategories.length,
               itemBuilder: (_, index) {
                 final Category subCategory = _subCategories[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(subCategory.name),
-                    trailing: Icon(MdiIcons.arrowRight),
+                return InkWell(
+                  onTap: () {
+                    CategoryBooks(
+                      type: 'category',
+                      title: subCategory.name,
+                      categoryId: subCategory.categoryId.toString(),
+                    ).launch(context);
+                  },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(subCategory.name),
+                      trailing: Icon(MdiIcons.arrowRight),
+                    ),
                   ),
                 );
               },

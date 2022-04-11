@@ -72,6 +72,30 @@ class _NewFeedViewState extends State<NewFeedView> {
                 ? post.embedModel?.categories?.first?.name
                 : "Uncategorized";
 
+            if (index % 5 == 0 && index > 0) {
+              return Card(
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 250,
+                      child: cachedImage(imageUrl, fit: BoxFit.fitWidth)
+                          .cornerRadiusWithClipRRect(0)
+                          .paddingAll(0),
+                    ),
+                    ListTile(
+                      title: Text(
+                        post.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Text(categoryName),
+                    )
+                  ],
+                ),
+              );
+            }
+
             return Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

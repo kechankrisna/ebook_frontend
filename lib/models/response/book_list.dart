@@ -13,7 +13,7 @@ class BookListResponse {
       data: json['data'] != null
           ? (json['data'] as List).map((i) => BookDetail.fromJson(i)).toList()
           : null,
-      maxPrice: json['max_price'],
+      maxPrice: int.tryParse("${json['max_price']}"),
       pagination: json['pagination'] != null
           ? Pagination.fromJson(json['pagination'])
           : null,
