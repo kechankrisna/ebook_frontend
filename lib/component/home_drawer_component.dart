@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ebook/network/common_api_calls.dart';
 import 'package:ebook/screens/about_app_screen.dart';
 import 'package:ebook/screens/cart_screen.dart';
@@ -102,12 +101,7 @@ class HomeDrawerState extends State<HomeDrawer> {
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_book,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.libraryShelves),
               title: keyString(context, "lbl_my_library"),
               onTap: () {
                 finish(context);
@@ -116,12 +110,7 @@ class HomeDrawerState extends State<HomeDrawer> {
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_cart,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.cartOutline),
               title: keyString(context, "lbl_my_cart"),
               onTap: () {
                 finish(context);
@@ -133,12 +122,7 @@ class HomeDrawerState extends State<HomeDrawer> {
               children: <Widget>[
                 SettingItemWidget(
                   titleTextColor: context.theme.textTheme.headline6.color,
-                  leading: SvgPicture.asset(
-                    icon_bookmark,
-                    width: 20,
-                    height: 20,
-                    color: context.theme.iconTheme.color,
-                  ),
+                  leading: Icon(MdiIcons.bookmarkOutline),
                   title: keyString(context, "lbl_wish_list"),
                   onTap: () {
                     finish(context);
@@ -147,12 +131,7 @@ class HomeDrawerState extends State<HomeDrawer> {
                 ),
                 SettingItemWidget(
                   titleTextColor: context.theme.textTheme.headline6.color,
-                  leading: SvgPicture.asset(
-                    icon_bank,
-                    width: 20,
-                    height: 20,
-                    color: context.theme.iconTheme.color,
-                  ),
+                  leading: Icon(MdiIcons.history),
                   title: keyString(context, "lbl_transaction_history"),
                   onTap: () {
                     finish(context);
@@ -161,12 +140,7 @@ class HomeDrawerState extends State<HomeDrawer> {
                 ),
                 SettingItemWidget(
                   titleTextColor: context.theme.textTheme.headline6.color,
-                  leading: SvgPicture.asset(
-                    icon_password,
-                    width: 20,
-                    height: 20,
-                    color: context.theme.iconTheme.color,
-                  ),
+                  leading: Icon(MdiIcons.lockOutline),
                   title: keyString(context, "lbl_change_password"),
                   onTap: () {
                     finish(context);
@@ -175,12 +149,7 @@ class HomeDrawerState extends State<HomeDrawer> {
                 ),
                 SettingItemWidget(
                   titleTextColor: context.theme.textTheme.headline6.color,
-                  leading: SvgPicture.asset(
-                    icon_logout,
-                    width: 20,
-                    height: 20,
-                    color: context.theme.iconTheme.color,
-                  ),
+                  leading: Icon(MdiIcons.exitToApp),
                   title: keyString(context, "lbl_logout"),
                   onTap: () async {
                     showConfirmDialogCustom(
@@ -201,12 +170,7 @@ class HomeDrawerState extends State<HomeDrawer> {
             ).visible(getBoolAsync(IS_LOGGED_IN)),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_settings,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.cogOutline),
               title: keyString(context, "settings"),
               onTap: () {
                 finish(context);
@@ -215,64 +179,39 @@ class HomeDrawerState extends State<HomeDrawer> {
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_share,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.shareVariantOutline),
               title: keyString(context, "lbl_share_app"),
               onTap: () {
-                Share.share('check out my website https://google.com');
+                Share.share('check out my website $webUrl');
               },
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_rate,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.messageDraw),
               title: keyString(context, "lbl_rate_app"),
               onTap: () {
-                launchUrl(playStoreBaseURL + "com.iqonic.fluttergranth");
+                launchUrl(playStoreBaseURL + "net.thebrainbooks.ebook");
               },
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_shield,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.shieldAccountOutline),
               title: keyString(context, "lbl_privacy_policy"),
               onTap: () {
-                launchUrl("https://www.google.com");
+                launchUrl(webUrl);
               },
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_contract,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.fileSign),
               title: keyString(context, "lbl_terms_amp_condition"),
               onTap: () {
-                launchUrl("https://www.google.com");
+                launchUrl(webUrl);
               },
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_blog,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.commentQuoteOutline),
               title: keyString(context, "lbl_feedback"),
               onTap: () {
                 finish(context);
@@ -281,12 +220,7 @@ class HomeDrawerState extends State<HomeDrawer> {
             ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
-              leading: SvgPicture.asset(
-                icon_info,
-                width: 20,
-                height: 20,
-                color: context.theme.iconTheme.color,
-              ),
+              leading: Icon(MdiIcons.informationOutline),
               title: keyString(context, "lbl_about_app"),
               onTap: () {
                 finish(context);
