@@ -42,6 +42,11 @@ Future<BookListResponse> getBookList(page, aAuthorId) async {
       await buildHttpResponse('book-list?page=$page&author_id=$aAuthorId')));
 }
 
+Future<BookListResponse> getBooks([Map<String, dynamic> queryParams]) async {
+  return BookListResponse.fromJson(await handleResponse(
+      await buildHttpResponse('book-list', queryParams: queryParams)));
+}
+
 Future searchBook(page, searchText) async {
   return await handleResponse(
       await buildHttpResponse('book-list?page=$page&search_text=$searchText'));

@@ -35,9 +35,11 @@ Future<Response> buildHttpResponse(String endPoint,
     {HttpMethod method = HttpMethod.GET, Map request, Map queryParams}) async {
   if (await isNetworkAvailable()) {
     var headers = buildHeaderTokens();
-    if (queryParams!=null) {
+    if (queryParams != null) {
       endPoint += "?" +
-          queryParams.keys.map((key) => "$key=${queryParams[key]}").join("&");
+          queryParams.keys
+              .map((key) => "$key=${queryParams[key] ?? ''}")
+              .join("&");
     }
     Uri url = buildBaseUrl(endPoint);
 

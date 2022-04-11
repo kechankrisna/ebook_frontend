@@ -59,9 +59,9 @@ class _BookGridActionButtonState extends State<BookGridActionButton> {
   @override
   void initState() {
     super.initState();
-    2.seconds.delay.then((value) => setStatusBarColor(
-        Theme.of(context).cardTheme.color,
-        statusBarBrightness: Brightness.light));
+    /// 2.seconds.delay.then((value) => setStatusBarColor(
+    ///     Theme.of(context).cardTheme.color,
+    ///     statusBarBrightness: Brightness.light));
     if (widget.bookDetail != null) {
       mBookDetail = widget.bookDetail;
       setState(() {});

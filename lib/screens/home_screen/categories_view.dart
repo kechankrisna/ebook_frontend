@@ -1,8 +1,6 @@
 import 'package:ebook/app_localizations.dart';
 import 'package:ebook/models/response/category.dart';
-import 'package:ebook/models/response/main_category.dart';
 import 'package:ebook/network/rest_apis.dart';
-import 'package:ebook/screens/home_screen/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -102,4 +100,3 @@ class _CategoriesViewState extends State<CategoriesView> {
     );
   }
 }
-
