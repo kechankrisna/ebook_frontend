@@ -34,7 +34,7 @@ class _MainCategoryChipBarState extends State<MainCategoryChipBar> {
     final controller = context.read<MainCategoryController>();
     var mainCategories = controller.response.data;
     if (mainCategories == null) {
-      return Loader();
+      return SizedBox();
     }
     return Container(
       decoration: BoxDecoration(
@@ -54,7 +54,7 @@ class _MainCategoryChipBarState extends State<MainCategoryChipBar> {
               setState(() {
                 _category = category;
               });
-              widget.onTap?.call(_category,mainCategories[index] );
+              widget.onTap?.call(_category, mainCategories[index]);
             },
           );
         },
