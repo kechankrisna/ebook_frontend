@@ -310,7 +310,7 @@ class _HomeViewState extends State<HomeView> with AfterLayoutMixin<HomeView> {
       child: Column(
         children: [
           MainCategoryChipBar(
-            onTap: (category) async {
+            onTap: (category, mainCategory) async {
               var result =
                   await getDashboard({'category_id': category?.categoryId});
               print("result.data.length ${result.popularBook?.length}");

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:ebook/screens/controllers/main_category_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ebook/component/book_product_component.dart';
@@ -21,6 +22,7 @@ import 'package:ebook/utils/resources/images.dart';
 import 'package:ebook/utils/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 // import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../app_localizations.dart';
@@ -346,60 +348,64 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    return Scaffold(
-      /// key: _scaffoldKey,
-      drawer: HomeDrawer(),
-      appBar: AppBar(
-        title: Text(getBottomNavigationBarItem(selectedIndex).label),
-        centerTitle: true,
-        actions: <Widget>[
-          InkWell(
-            child: Container(
-              width: 40,
-              height: 40,
-              padding: EdgeInsets.all(10.0),
-              child: SvgPicture.asset(
-                icon_search,
-                color: context.theme.iconTheme.color,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => MainCategoryController())
+      ],
+      child: Scaffold(
+        drawer: HomeDrawer(),
+        appBar: AppBar(
+          title: Text(getBottomNavigationBarItem(selectedIndex).label),
+          centerTitle: true,
+          actions: <Widget>[
+            InkWell(
+              child: Container(
+                width: 40,
+                height: 40,
+                padding: EdgeInsets.all(10.0),
+                child: SvgPicture.asset(
+                  icon_search,
+                  color: context.theme.iconTheme.color,
+                ),
               ),
+              onTap: () {
+                SearchScreen().launch(context);
+              },
+              radius: 12.0,
             ),
-            onTap: () {
-              SearchScreen().launch(context);
-            },
-            radius: 12.0,
-          ),
-          HomeViewCartIcon(),
-        ],
-      ),
-      body: getBody(selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        unselectedItemColor: themeData.buttonTheme.colorScheme.onSecondary,
-        selectedItemColor: themeData.buttonTheme.colorScheme.onPrimary,
-        currentIndex: selectedIndex,
-        onTap: (index) => setState(() => selectedIndex = index),
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(MdiIcons.newspaperVariantOutline),
-              label: keyString(context, "New Feed"),
-              tooltip: keyString(context, "New Feed")),
-          BottomNavigationBarItem(
-              icon: Icon(MdiIcons.compassOutline),
-              label: keyString(context, "Categories"),
-              tooltip: keyString(context, "Categories")),
-          BottomNavigationBarItem(
-              icon: Icon(MdiIcons.storeOutline),
-              label: keyString(context, "Store"),
-              tooltip: keyString(context, "Store")),
-          BottomNavigationBarItem(
-              icon: Icon(MdiIcons.starOutline),
-              label: keyString(context, "Top Charts"),
-              tooltip: keyString(context, "Top Charts")),
-          BottomNavigationBarItem(
-              icon: Icon(MdiIcons.libraryShelves),
-              label: keyString(context, "lbl_my_library"),
-              tooltip: keyString(context, "lbl_my_library")),
-        ],
+            HomeViewCartIcon(),
+          ],
+        ),
+        body: getBody(selectedIndex),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: themeData.buttonTheme.colorScheme.onSecondary,
+          selectedItemColor: themeData.buttonTheme.colorScheme.onPrimary,
+          currentIndex: selectedIndex,
+          onTap: (index) => setState(() => selectedIndex = index),
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(MdiIcons.newspaperVariantOutline),
+                label: keyString(context, "New Feed"),
+                tooltip: keyString(context, "New Feed")),
+            BottomNavigationBarItem(
+                icon: Icon(MdiIcons.compassOutline),
+                label: keyString(context, "Categories"),
+                tooltip: keyString(context, "Categories")),
+            BottomNavigationBarItem(
+                icon: Icon(MdiIcons.storeOutline),
+                label: keyString(context, "Store"),
+                tooltip: keyString(context, "Store")),
+            BottomNavigationBarItem(
+                icon: Icon(MdiIcons.starOutline),
+                label: keyString(context, "Top Charts"),
+                tooltip: keyString(context, "Top Charts")),
+            BottomNavigationBarItem(
+                icon: Icon(MdiIcons.libraryShelves),
+                label: keyString(context, "lbl_my_library"),
+                tooltip: keyString(context, "lbl_my_library")),
+          ],
+        ),
       ),
     );
   }

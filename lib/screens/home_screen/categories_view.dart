@@ -1,5 +1,6 @@
 import 'package:ebook/app_localizations.dart';
 import 'package:ebook/models/response/category.dart';
+import 'package:ebook/models/response/main_category.dart';
 import 'package:ebook/network/rest_apis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -78,7 +79,11 @@ class _CategoriesViewState extends State<CategoriesView> {
     return Column(
       children: [
         MainCategoryChipBar(
-          onTap: (category) => _subCategoryList(category?.categoryId),
+          onTap: (category, mainCategory) {
+            setState(() {
+              _subCategories = mainCategory.subcategories;
+            });
+          },
         ),
         Expanded(
           child: Container(

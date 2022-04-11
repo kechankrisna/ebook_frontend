@@ -1,13 +1,13 @@
-import 'package:ebook/app_localizations.dart';
 import 'package:ebook/models/response/category.dart';
 import 'package:ebook/models/response/main_category.dart';
-import 'package:ebook/network/rest_apis.dart';
+import 'package:ebook/screens/controllers/main_category_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 
 class MainCategoryChipBar extends StatefulWidget {
-  final Function(Category category) onTap;
+  final Function(Category category, MainCategory raw) onTap;
   const MainCategoryChipBar({Key key, this.onTap}) : super(key: key);
 
   @override
@@ -17,12 +17,10 @@ class MainCategoryChipBar extends StatefulWidget {
 class _MainCategoryChipBarState extends State<MainCategoryChipBar> {
   bool isLoadingMoreData = false;
   Category _category;
-  List<MainCategory> _mainCategories = [];
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.endOfFrame.then((value) => _categoryList());
   }
 
   @override
@@ -31,49 +29,13 @@ class _MainCategoryChipBarState extends State<MainCategoryChipBar> {
     super.setState(fn);
   }
 
-  Future _categoryList() async {
-    isNetworkAvailable().then((bool) {
-      if (bool) {
-        mainCategories().then((result) {
-          if (result.data != null && result.data.isNotEmpty) {
-            setState(() {
-              _mainCategories.clear();
-              _mainCategories.add(MainCategory(categoryId: null, name: "ALL"));
-              _mainCategories.addAll(result.data);
-
-              /// selectedCategory = 0;
-              /// isLoadingMoreData = true;
-              /// fetchBookList();
-              /// scrollController.addListener(() {
-              ///   scrollHandler();
-              /// });
-            });
-          } else {
-            /// setState(() {
-            ///   isDataLoaded = true;
-            ///   isLoadingMoreData = false;
-            /// });
-          }
-        }).catchError((error) {
-          toast(error.toString());
-
-          /// setState(() {
-          ///   isLoadingMoreData = false;
-          ///   isLastPage = true;
-          /// });
-        });
-      } else {
-        setState(() {
-          isLoadingMoreData = false;
-        });
-        toast(keyString(context, "error_network_no_internet"));
-        finish(context);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<MainCategoryController>();
+    var mainCategories = controller.response.data;
+    if (mainCategories == null) {
+      return Loader();
+    }
     return Container(
       decoration: BoxDecoration(
           border:
@@ -82,9 +44,9 @@ class _MainCategoryChipBarState extends State<MainCategoryChipBar> {
       child: ListView.builder(
         primary: false,
         scrollDirection: Axis.horizontal,
-        itemCount: _mainCategories.length,
+        itemCount: mainCategories.length,
         itemBuilder: (_, index) {
-          final category = _mainCategories[index].toCategory();
+          final category = mainCategories[index].toCategory();
           return CategoryChip(
             category: category,
             selected: _category?.categoryId == category?.categoryId,
@@ -92,7 +54,7 @@ class _MainCategoryChipBarState extends State<MainCategoryChipBar> {
               setState(() {
                 _category = category;
               });
-              widget.onTap?.call(_category);
+              widget.onTap?.call(_category,mainCategories[index] );
             },
           );
         },
@@ -100,7 +62,6 @@ class _MainCategoryChipBarState extends State<MainCategoryChipBar> {
     );
   }
 }
-
 
 class CategoryChip extends StatelessWidget {
   final Category category;

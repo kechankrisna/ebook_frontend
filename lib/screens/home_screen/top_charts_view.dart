@@ -3,10 +3,13 @@ import 'package:ebook/models/response/book_detail.dart';
 import 'package:ebook/models/response/book_list.dart';
 import 'package:ebook/models/response/category.dart';
 import 'package:ebook/network/rest_apis.dart';
+import 'package:ebook/screens/book_description_screen.dart';
+import 'package:ebook/screens/book_description_screen2.dart';
 import 'package:ebook/screens/controllers/book_controller.dart';
 import 'package:ebook/screens/filters/book_filter.dart';
 import 'package:ebook/screens/home_screen/book_grid_action_button.dart';
 import 'package:ebook/screens/home_screen/main_category_chip_bar.dart';
+import 'package:ebook/utils/constants.dart';
 import 'package:ebook/utils/refresh_data_container.dart';
 import 'package:ebook/utils/widgets.dart';
 import 'package:flutter/foundation.dart' hide Category;
@@ -94,18 +97,14 @@ class _TopChartsViewState extends State<TopChartsView> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (ctx) => BookController(ctx))],
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => BookController(ctx)),
+      ],
       child: Column(
         children: [
-          MainCategoryChipBar(
-            onTap: (category) {
-              setState(() {
-                _category = category;
-              });
-              _subCategoryList(category?.categoryId);
-            },
+          FilterByCategory(
+            onTap: (category) => _subCategoryList(category?.categoryId),
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -130,6 +129,36 @@ class _TopChartsViewState extends State<TopChartsView> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class FilterByCategory extends StatefulWidget {
+  final Function(Category category) onTap;
+  const FilterByCategory({Key key, this.onTap}) : super(key: key);
+
+  @override
+  State<FilterByCategory> createState() => _FilterByCategoryState();
+}
+
+class _FilterByCategoryState extends State<FilterByCategory> {
+  Category _category;
+
+  @override
+  Widget build(BuildContext context) {
+    return MainCategoryChipBar(
+      onTap: (category, mainCategory) {
+        setState(() {
+          _category = category;
+        });
+        widget.onTap?.call(_category);
+        final controller = context.read<BookController>();
+        var _filter = controller.filter;
+        _filter.categoryId = _category.categoryId;
+        _filter.subcategoryId = _category.subCategoryId;
+        controller.updateFilter(_filter);
+        controller.refresh();
+      },
     );
   }
 }
@@ -298,59 +327,68 @@ class BookListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: Row(
-        children: [
-          Container(
-            width: 75,
-            height: 100,
-            padding: EdgeInsets.all(8),
-            child: cachedImage(
-              bookDetail.frontCover,
-              fit: BoxFit.fill,
-            ).cornerRadiusWithClipRRect(0),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                        child: Text(
-                      bookDetail.title,
-                      overflow: TextOverflow.ellipsis,
-                    )),
-                    BookGridActionButton(bookDetail: bookDetail),
-                  ],
-                ),
-                Text(bookDetail.authorName),
-                RatingBar.builder(
-                  initialRating:
-                      double.parse(bookDetail.totalRating.toString()),
-                  minRating: 0,
-                  glow: false,
-                  itemSize: 16,
-                  direction: Axis.horizontal,
-                  allowHalfRating: false,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                  itemBuilder: (context, _) =>
-                      Icon(Icons.star, color: Colors.amber),
-                  onRatingUpdate: (double value) {},
-                ),
-                Row(
-                  children: [
-                    Spacer(),
-                    Text(
-                        "${bookDetail.price.toString().toCurrencyFormat().validate()}")
-                  ],
-                )
-              ],
+    return InkWell(
+      onTap: () {
+        if (getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 0) == 1) {
+          BookDescriptionScreen(bookDetail: bookDetail).launch(context);
+        } else {
+          BookDescriptionScreen2(bookDetail: bookDetail).launch(context);
+        }
+      },
+      child: Card(
+        elevation: 2,
+        child: Row(
+          children: [
+            Container(
+              width: 75,
+              height: 100,
+              padding: EdgeInsets.all(8),
+              child: cachedImage(
+                bookDetail.frontCover,
+                fit: BoxFit.fill,
+              ).cornerRadiusWithClipRRect(0),
             ),
-          )
-        ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Text(
+                        bookDetail.title,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                      BookGridActionButton(bookDetail: bookDetail),
+                    ],
+                  ),
+                  Text(bookDetail.authorName),
+                  RatingBar.builder(
+                    initialRating:
+                        double.parse(bookDetail.totalRating.toString()),
+                    minRating: 0,
+                    glow: false,
+                    itemSize: 16,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                    itemBuilder: (context, _) =>
+                        Icon(Icons.star, color: Colors.amber),
+                    onRatingUpdate: (double value) {},
+                  ),
+                  Row(
+                    children: [
+                      Spacer(),
+                      Text(
+                          "${bookDetail.price.toString().toCurrencyFormat().validate()}")
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

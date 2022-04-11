@@ -8,6 +8,7 @@ class MainCategory {
   DateTime createdAt;
   DateTime updatedAt;
   DateTime deletedAt;
+  List<Category> subcategories;
 
   MainCategory({
     this.categoryId,
@@ -16,30 +17,33 @@ class MainCategory {
     this.name,
     this.status,
     this.updatedAt,
+    this.subcategories,
   });
 
   factory MainCategory.fromJson(Map<String, dynamic> json) {
     return MainCategory(
-      categoryId: json['category_id'],
-      name: json['name'],
-      status: json['status'],
-      createdAt: json['created_at'] != null
-          ? DateTime.tryParse(json['created_at'])
-          : null,
-      updatedAt: json['updated_at'] != null
-          ? DateTime.tryParse(json['updated_at'])
-          : null,
-      deletedAt: json['deleted_at'] != null
-          ? DateTime.tryParse(json['deleted_at'])
-          : null,
-    );
+        categoryId: json['category_id'],
+        name: json['name'],
+        status: json['status'],
+        createdAt: json['created_at'] != null
+            ? DateTime.tryParse(json['created_at'])
+            : null,
+        updatedAt: json['updated_at'] != null
+            ? DateTime.tryParse(json['updated_at'])
+            : null,
+        deletedAt: json['deleted_at'] != null
+            ? DateTime.tryParse(json['deleted_at'])
+            : null,
+        subcategories: List.from(json['subcategories'] ?? [])
+            .map((e) => Category.fromJson(e))
+            .toList());
   }
 
   Category toCategory() {
     return Category(
       status: this.status,
       subCategoryId: null,
-      categoryId:this.categoryId,
+      categoryId: this.categoryId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       name: this.name,
