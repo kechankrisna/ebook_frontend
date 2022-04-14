@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ebook/screens/home_screen.dart';
 import 'package:ebook/utils/constants.dart';
@@ -29,23 +27,19 @@ class WalkThroughScreenState extends State<WalkthroughScreen> {
         .then((value) => setStatusBarColor(context.scaffoldBackgroundColor));
     list.add(WalkThrough(
         title: 'Select a Book',
-        subTitle:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
+        subTitle: "Select any books from any authors you would like to read",
         walkImg: icon_walk1));
     list.add(WalkThrough(
         title: 'Purchase Online',
-        subTitle:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
+        subTitle: "Make any purchase with modern digital payment",
         walkImg: icon_walk2));
     list.add(WalkThrough(
         title: 'Enjoy Your Book',
-        subTitle:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
+        subTitle: "Feel fresh to upgrade the knowledge",
         walkImg: icon_walk3));
     list.add(WalkThrough(
         title: 'Welcome to Ebook',
-        subTitle:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
+        subTitle: "Welcome to the lastest ebook online in cambodia",
         walkImg: icon_walk4,
         isLast: true));
   }

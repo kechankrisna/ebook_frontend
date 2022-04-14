@@ -27,7 +27,9 @@ int mAdShowCount = 0;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await FlutterDownloader.initialize(debug: true);
+  if (Platform.isAndroid || Platform.isIOS) {
+    await FlutterDownloader.initialize(debug: true);
+  }
   await initialize();
 
   if (getBoolAsync(IS_DARK_THEME)) {
