@@ -1,0 +1,4 @@
+keytool -genkey -v -keystore ~/ebook.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key
+password: the.brain
+firstname lastname: mey sameth
+Is CN=mey sameth, OU=The Brain Books, O=The Brain Books, L=Siem Reap, ST=Siem Reap, C=KH correct?

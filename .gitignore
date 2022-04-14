@@ -46,6 +46,6 @@ app.*.map.json
 /android/app/release
 
 # keys
-*.jks
+<!-- *.jks -->
 *.pem
 *PrivateKey
