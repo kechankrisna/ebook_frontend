@@ -183,7 +183,7 @@ class _BookDescriptionScreen2State extends State<BookDescriptionScreen2>
   }
 
   sampleClick(context) async {
-    if (await Permissions.storageAndAudioGranted()) {
+    if (await Permissions.storageGranted()) {
       if (mSampleDownloadTask.status == DownloadTaskStatus.undefined) {
         var id = await requestDownload(
             context: context,
@@ -200,6 +200,8 @@ class _BookDescriptionScreen2State extends State<BookDescriptionScreen2>
       } else {
         toast('Downloading');
       }
+    } else {
+      toast('please accept the permission');
     }
   }
 
