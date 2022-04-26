@@ -121,37 +121,38 @@ class SettingScreenState extends State<SettingScreen> {
               activeColor: color_primary_black,
             ),
           ),
-          Divider(),
-          SettingItemWidget(
-            leading: Icon(Icons.check_circle_outline_outlined),
-            title: "Choose detail page variant",
-            titleTextStyle:
-                boldTextStyle(color: context.theme.textTheme.headline6.color),
-            onTap: () {
-              ChooseDetailPageVariantScreen().launch(context);
-            },
-          ),
-          Observer(
-            builder: (_) => SettingItemWidget(
-              leading: Icon(
-                  appStore.isNotificationOn ? Feather.bell : Feather.bell_off),
-              title:
-                  '${appStore.isNotificationOn ? 'Disable' : 'Enable'} Push Notification',
-              titleTextStyle:
-                  boldTextStyle(color: context.theme.textTheme.headline6.color),
-              trailing: CupertinoSwitch(
-                activeColor: colorPrimary,
-                value: appStore.isNotificationOn,
-                onChanged: (v) {
-                  appStore.setNotification(v);
-                },
-              ).withHeight(10),
-              onTap: () {
-                appStore.setNotification(
-                    !getBoolAsync(IS_NOTIFICATION_ON, defaultValue: true));
-              },
-            ),
-          ),
+
+          /// Divider(),
+          /// SettingItemWidget(
+          ///   leading: Icon(Icons.check_circle_outline_outlined),
+          ///   title: "Choose detail page variant",
+          ///   titleTextStyle:
+          ///       boldTextStyle(color: context.theme.textTheme.headline6.color),
+          ///   onTap: () {
+          ///     ChooseDetailPageVariantScreen().launch(context);
+          ///   },
+          /// ),
+          /// Observer(
+          ///   builder: (_) => SettingItemWidget(
+          ///     leading: Icon(
+          ///         appStore.isNotificationOn ? Feather.bell : Feather.bell_off),
+          ///     title:
+          ///         '${appStore.isNotificationOn ? 'Disable' : 'Enable'} Push Notification',
+          ///     titleTextStyle:
+          ///         boldTextStyle(color: context.theme.textTheme.headline6.color),
+          ///     trailing: CupertinoSwitch(
+          ///       activeColor: colorPrimary,
+          ///       value: appStore.isNotificationOn,
+          ///       onChanged: (v) {
+          ///         appStore.setNotification(v);
+          ///       },
+          ///     ).withHeight(10),
+          ///     onTap: () {
+          ///       appStore.setNotification(
+          ///           !getBoolAsync(IS_NOTIFICATION_ON, defaultValue: true));
+          ///     },
+          ///   ),
+          /// ),
         ],
       ),
     );
