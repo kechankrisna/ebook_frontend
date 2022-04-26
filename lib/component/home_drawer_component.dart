@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ebook/network/common_api_calls.dart';
 import 'package:ebook/screens/about_app_screen.dart';
@@ -185,20 +187,21 @@ class HomeDrawerState extends State<HomeDrawer> {
                 Share.share('check out my website $webUrl');
               },
             ),
-            SettingItemWidget(
-              titleTextColor: context.theme.textTheme.headline6.color,
-              leading: Icon(MdiIcons.messageDraw),
-              title: keyString(context, "lbl_rate_app"),
-              onTap: () {
-                launchUrl(playStoreBaseURL + "net.thebrainbooks.ebook");
-              },
-            ),
+            if (Platform.isAndroid)
+              SettingItemWidget(
+                titleTextColor: context.theme.textTheme.headline6.color,
+                leading: Icon(MdiIcons.messageDraw),
+                title: keyString(context, "lbl_rate_app"),
+                onTap: () {
+                  launchUrl(playStoreBaseURL + "net.thebrainbooks.ebook");
+                },
+              ),
             SettingItemWidget(
               titleTextColor: context.theme.textTheme.headline6.color,
               leading: Icon(MdiIcons.shieldAccountOutline),
               title: keyString(context, "lbl_privacy_policy"),
               onTap: () {
-                launchUrl(webUrl);
+                launchUrl(privacyUrl);
               },
             ),
             SettingItemWidget(
@@ -206,7 +209,7 @@ class HomeDrawerState extends State<HomeDrawer> {
               leading: Icon(MdiIcons.fileSign),
               title: keyString(context, "lbl_terms_amp_condition"),
               onTap: () {
-                launchUrl(webUrl);
+                launchUrl(privacyUrl);
               },
             ),
             SettingItemWidget(

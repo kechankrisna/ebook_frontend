@@ -1,6 +1,7 @@
 const mBaseUrl =
     'https://dashboard.thebrainbooks.net/api/'; //http://192.168.0.199/api/
 const webUrl = "https://thebranbooks.net";
+const privacyUrl = "https://dashboard.thebrainbooks.net/pages/privacy-policy";
 const blogUrl = "https://www.reamker.com/";
 
 /// fonts

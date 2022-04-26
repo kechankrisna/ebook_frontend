@@ -91,14 +91,15 @@ class _WishlistScreenState extends State<WishlistScreen>
                     WishListItem data = list[list.indexOf(e)];
                     return InkWell(
                       onTap: () {
+                        int bookId = int.tryParse("${data.bookId}");
                         if (getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 0) ==
                             1) {
                           BookDescriptionScreen(
-                                  bookDetail: BookDetail(bookId: data.bookId))
+                                  bookDetail: BookDetail(bookId: bookId))
                               .launch(context);
                         } else {
                           BookDescriptionScreen2(
-                                  bookDetail: BookDetail(bookId: data.bookId))
+                                  bookDetail: BookDetail(bookId: bookId))
                               .launch(context);
                         }
                       },
