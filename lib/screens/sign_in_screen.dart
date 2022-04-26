@@ -123,12 +123,12 @@ class SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: context.scaffoldBackgroundColor,
-        body: Stack(
-          children: <Widget>[
-            Positioned(
+    return Scaffold(
+      backgroundColor: context.scaffoldBackgroundColor,
+      body: Stack(
+        children: <Widget>[
+          SafeArea(
+            child: Positioned(
               top: 8,
               left: 8,
               child: IconButton(
@@ -138,132 +138,129 @@ class SignInScreenState extends State<SignInScreen> {
                 },
               ),
             ),
-            SingleChildScrollView(
-              padding: EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      keyString(context, "lbl_sign_in"),
-                      style: boldTextStyle(
-                          size: 28,
-                          color: context.theme.textTheme.headline6.color),
-                    ),
-                    16.height,
-                    AppTextField(
-                      textStyle: primaryTextStyle(
-                          color: context.theme.textTheme.headline6.color,
-                          size: 14),
-                      textFieldType: TextFieldType.EMAIL,
-                      decoration: inputDecoration(context,
-                          label: keyString(context, "hint_email")),
-                      focus: emailFocus,
-                      nextFocus: passFocus,
-                      maxLines: 1,
-                      cursorColor: Theme.of(context).primaryColor,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) {
-                        email = value;
-                      },
-                      controller: emailController,
-                    ),
-                    16.height,
-                    AppTextField(
-                      textStyle: primaryTextStyle(
-                          color: context.theme.textTheme.headline6.color,
-                          size: 14),
-                      controller: passwordController,
-                      textFieldType: TextFieldType.PASSWORD,
-                      decoration: inputDecoration(context,
-                          label: keyString(context, "hint_password")),
-                      focus: passFocus,
-                      maxLines: 1,
-                      cursorColor: Theme.of(context).primaryColor,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (String value) {
-                        password = value;
-                      },
-                    ),
-                    16.height,
-                    Row(
-                      children: <Widget>[
-                        Theme(
-                          data: ThemeData(
-                              unselectedWidgetColor:
-                                  context.theme.textTheme.headline6.color),
-                          child: Checkbox(
-                            focusColor: Theme.of(context).primaryColor,
-                            activeColor: Theme.of(context).primaryColor,
-                            value: isRemember,
-                            onChanged: (bool value) {
-                              setState(() {
-                                isRemember = value;
-                              });
-                            },
-                          ),
+          ),
+          SingleChildScrollView(
+            padding: EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    keyString(context, "lbl_sign_in"),
+                    style: boldTextStyle(
+                        size: 28,
+                        color: context.theme.textTheme.headline6.color),
+                  ),
+                  16.height,
+                  AppTextField(
+                    textStyle: primaryTextStyle(
+                        color: context.theme.textTheme.headline6.color,
+                        size: 14),
+                    textFieldType: TextFieldType.EMAIL,
+                    decoration: inputDecoration(context,
+                        label: keyString(context, "hint_email")),
+                    focus: emailFocus,
+                    nextFocus: passFocus,
+                    maxLines: 1,
+                    cursorColor: Theme.of(context).primaryColor,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (String value) {
+                      email = value;
+                    },
+                    controller: emailController,
+                  ),
+                  16.height,
+                  AppTextField(
+                    textStyle: primaryTextStyle(
+                        color: context.theme.textTheme.headline6.color,
+                        size: 14),
+                    controller: passwordController,
+                    textFieldType: TextFieldType.PASSWORD,
+                    decoration: inputDecoration(context,
+                        label: keyString(context, "hint_password")),
+                    focus: passFocus,
+                    maxLines: 1,
+                    cursorColor: Theme.of(context).primaryColor,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (String value) {
+                      password = value;
+                    },
+                  ),
+                  16.height,
+                  Row(
+                    children: <Widget>[
+                      Theme(
+                        data: ThemeData(
+                            unselectedWidgetColor:
+                                context.theme.textTheme.headline6.color),
+                        child: Checkbox(
+                          focusColor: Theme.of(context).primaryColor,
+                          activeColor: Theme.of(context).primaryColor,
+                          value: isRemember,
+                          onChanged: (bool value) {
+                            setState(() {
+                              isRemember = value;
+                            });
+                          },
                         ),
-                        Text(
-                          keyString(context, "hint_remember_me"),
-                          style: TextStyle(
-                              fontFamily: font_regular,
-                              fontSize: 16,
-                              color: context.theme.textTheme.headline6.color),
-                        )
-                      ],
-                    ),
-                    50.height,
-                    AppButton(
-                      color: context.primaryColor,
-                      width: context.width(),
-                      textStyle:
-                          primaryTextStyle(size: 18, color: Colors.white),
-                      text: keyString(context, "lbl_sign_in"),
-                      onTap: () {
-                        if (isLoading) {
-                          return;
-                        }
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          email = emailController.text;
-                          password = passwordController.text;
-                          login(context);
-                        }
-                      },
-                    ),
-                    16.height,
-                    GestureDetector(
-                      child: Center(
-                          child: Text(
-                              keyString(context, "lbl_dont_have_account"),
-                              style: primaryTextStyle(
-                                  color:
-                                      context.theme.textTheme.headline6.color,
-                                  size: 18))),
-                      onTap: () {
-                        SignUpScreen().launch(context);
-                      },
-                    ),
-                    16.height,
-                    GestureDetector(
-                      child: Center(
-                          child: Text(keyString(context, "lbl_forgot_password"),
-                              style: primaryTextStyle(
-                                  color: context.primaryColor, size: 18))),
-                      onTap: () {
-                        ForgotPassword().launch(context);
-                      },
-                    ),
-                  ],
-                ),
+                      ),
+                      Text(
+                        keyString(context, "hint_remember_me"),
+                        style: TextStyle(
+                            fontFamily: font_regular,
+                            fontSize: 16,
+                            color: context.theme.textTheme.headline6.color),
+                      )
+                    ],
+                  ),
+                  50.height,
+                  AppButton(
+                    color: context.primaryColor,
+                    width: context.width(),
+                    textStyle: primaryTextStyle(size: 18, color: Colors.white),
+                    text: keyString(context, "lbl_sign_in"),
+                    onTap: () {
+                      if (isLoading) {
+                        return;
+                      }
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        email = emailController.text;
+                        password = passwordController.text;
+                        login(context);
+                      }
+                    },
+                  ),
+                  16.height,
+                  GestureDetector(
+                    child: Center(
+                        child: Text(keyString(context, "lbl_dont_have_account"),
+                            style: primaryTextStyle(
+                                color: context.theme.textTheme.headline6.color,
+                                size: 18))),
+                    onTap: () {
+                      SignUpScreen().launch(context);
+                    },
+                  ),
+                  16.height,
+                  GestureDetector(
+                    child: Center(
+                        child: Text(keyString(context, "lbl_forgot_password"),
+                            style: primaryTextStyle(
+                                color: context.primaryColor, size: 18))),
+                    onTap: () {
+                      ForgotPassword().launch(context);
+                    },
+                  ),
+                ],
               ),
-            ).center(),
-            Center(child: Loader().visible(isLoading))
-          ],
-        ),
+            ),
+          ).center(),
+          Center(child: Loader().visible(isLoading))
+        ],
       ),
     );
   }

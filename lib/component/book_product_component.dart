@@ -70,7 +70,7 @@ class BookProductComponent extends StatelessWidget {
                                         context.theme.textTheme.headline6.color,
                                     size: 18,
                                   )),
-                              4.height,
+                              12.height,
                               Text(
                                 parseHtmlString(list[index]
                                     .description
@@ -80,7 +80,7 @@ class BookProductComponent extends StatelessWidget {
                                     color:
                                         context.theme.textTheme.headline6.color,
                                     size: 14),
-                                maxLines: 6,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],
