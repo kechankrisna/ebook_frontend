@@ -39,7 +39,7 @@ class WalkThroughScreenState extends State<WalkthroughScreen> {
         walkImg: icon_walk3));
     list.add(WalkThrough(
         title: 'Welcome to Ebook',
-        subTitle: "Welcome to the lastest ebook online in cambodia",
+        subTitle: "Welcome to the latest ebook online in cambodia",
         walkImg: icon_walk4,
         isLast: true));
   }
