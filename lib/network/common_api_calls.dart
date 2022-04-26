@@ -103,7 +103,7 @@ doLogout(context) async {
       logout().then((result) async {}).catchError((error) {
         toast(error.toString());
       }).whenComplete(() async {
-        HomeScreen().launch(context);
+        /// HomeScreen().launch(context);
         await removeKey(TOKEN);
         await removeKey(USERNAME);
         await removeKey(NAME);
