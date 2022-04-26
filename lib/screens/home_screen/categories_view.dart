@@ -24,7 +24,9 @@ class _CategoriesViewState extends State<CategoriesView> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.endOfFrame.then((value) => _subCategoryList());
+    SchedulerBinding.instance.endOfFrame.then((value) {
+      if (mounted) _subCategoryList();
+    });
   }
 
   @override

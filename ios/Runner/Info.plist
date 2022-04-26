@@ -41,8 +41,6 @@
 	<string>Ebook app requires access to microphone when you will be used to record your speech at time of  press the "Mic" button.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Ebook app requires access to the photo library to upload your profile photo.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Ebook app requires access to Speech recognition  when you will be used to determine which words you speak into this device microphone.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

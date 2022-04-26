@@ -27,7 +27,7 @@ class _NewFeedViewState extends State<NewFeedView> {
     super.initState();
 
     SchedulerBinding.instance.endOfFrame.then((value) {
-      context.read<BlogController>().refresh();
+      if (mounted) context.read<BlogController>().refresh();
     });
   }
 
