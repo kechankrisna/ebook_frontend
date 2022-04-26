@@ -43,6 +43,12 @@ class _LibraryScreenState extends State<LibraryScreen>
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
+  @override
   void dispose() {
     _unbindBackgroundIsolate();
     super.dispose();

@@ -42,6 +42,12 @@ class _LibraryViewState extends State<LibraryView>
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
+  @override
   void dispose() {
     _unbindBackgroundIsolate();
     super.dispose();
