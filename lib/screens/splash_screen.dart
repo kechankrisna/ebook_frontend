@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Text(keyString(context, "app_name"),
                       style: boldTextStyle(size: 24, color: Colors.white))
                   .paddingOnly(top: 16),
-              Text(keyString(context, "lbl_welcome_to_ebook_spot"),
+              Text(keyString(context, "lbl_welcome_to_ebook"),
                       style: primaryTextStyle(color: Colors.white))
                   .paddingOnly(top: 8),
             ],
