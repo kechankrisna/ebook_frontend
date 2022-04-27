@@ -582,31 +582,30 @@ class _CartScreenState extends State<CartScreen>
                 Divider(),
                 Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.bookmark_border,
-                            size: 20, color: colorPrimary),
-                        2.width,
-                        Text(keyString(context, "lbl_move_to_wishlist"),
-                            style:
-                                boldTextStyle(size: 14, color: colorPrimary)),
-                      ],
-                    ).onTap(() {
-                      removeBookFromCart(context, cartItem,
-                          addToWishList: true);
-                    }).expand(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.delete_outline, size: 20, color: Colors.red),
-                        6.width,
-                        Text(keyString(context, "lbl_remove"),
-                            style:
-                                primaryTextStyle(size: 14, color: Colors.red)),
-                      ],
-                    ).onTap(() {
-                      removeBookFromCart(context, cartItem);
-                    })
+                    Flexible(
+                        child: TextButton.icon(
+                            onPressed: () {
+                              removeBookFromCart(context, cartItem,
+                                  addToWishList: true);
+                            },
+                            icon: Icon(Icons.bookmark_border,
+                                size: 20, color: colorPrimary),
+                            label: Text(
+                                keyString(context, "lbl_move_to_wishlist"),
+                                style: boldTextStyle(
+                                    size: 14, color: colorPrimary),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1))),
+                    Flexible(
+                        child: TextButton.icon(
+                            onPressed: () {
+                              removeBookFromCart(context, cartItem);
+                            },
+                            icon: Icon(Icons.delete_outline,
+                                size: 20, color: Colors.red),
+                            label: Text(keyString(context, "lbl_remove"),
+                                style: primaryTextStyle(
+                                    size: 14, color: Colors.red)))),
                   ],
                 ).expand()
               ],
