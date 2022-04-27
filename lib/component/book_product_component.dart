@@ -133,6 +133,7 @@ class BookProductComponentPlus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
+    final size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -165,7 +166,7 @@ class BookProductComponentPlus extends StatelessWidget {
                   child: BookProductGrid(bookDetail: e),
                 ))
             .toList(),
-        crossAxisCount: 3,
+        crossAxisCount: size.width > 600 ? 6 : 3,
         mainAxisSpacing: 0,
         crossAxisSpacing: 0,
       ),
