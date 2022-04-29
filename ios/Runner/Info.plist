@@ -28,8 +28,6 @@
 	<string>All files have been downloaded</string>
 	<key>FDMaximumConcurrentTasks</key>
 	<integer>5</integer>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -37,10 +35,24 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Play using while you are hiking</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>purpose for using calendar</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The Brain Book app requires access to the Camera to upload your profile photo.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>The Brain Book app requires access to the contact when need</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location is required</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is required</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is required</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>The Brain Book app requires access to microphone when you will be used to record your speech at time of  press the &quot;Mic&quot; button.</string>
+	<string>The Brain Book app requires access to microphone when you will be used to record your speech at time of  press the "Mic" button.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This app needs to be able to access your motion use</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The Brain Book app requires access to the photo library to upload your profile photo.</string>
 	<key>UIBackgroundModes</key>
